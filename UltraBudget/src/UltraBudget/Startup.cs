@@ -29,6 +29,7 @@ namespace UltraBudget
         // For more information on how to configure your application, visit http://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMvc();
             services.AddSingleton(Configuration);
             services.AddSingleton<IGreeter, Greeter>();
         }
@@ -38,22 +39,25 @@ namespace UltraBudget
             IApplicationBuilder app, 
             IHostingEnvironment env, 
             ILoggerFactory loggerFactory,
-            IGreeter greeter
-            )
+            IGreeter greeter)
         {
             loggerFactory.AddConsole();
 
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+            } else 
+            if (env.IsProduction())
+            {
+                app.UseExceptionHandler( new ExceptionHandlerOptions
+                {
+                    ExceptionHandler = context => context.Response.WriteAsync("Oops!")
+                });
             }
 
-            app.Run(async (context) =>
-            {
-                var message = greeter.GetGreeting();
+            app.UseFileServer();
 
-                await context.Response.WriteAsync(message);
-            });
+            app.UseMvcWithDefaultRoute();
         }
     }
 }
