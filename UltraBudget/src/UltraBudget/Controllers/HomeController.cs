@@ -1,15 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
+using UltraBudget.Models;
+using UltraBudget.Services;
 
 namespace UltraBudget.Controllers
 {
-    public class HomeController
+    //[Route("[controller]/[action]")]
+    public class HomeController: Controller
     {
-        public string Index()
+        private ITransactionData _transactionData;
+
+        public HomeController(ITransactionData transactionData)
         {
-            return "Hello from the Home Controller";
+            _transactionData = transactionData;
+        }
+        public IActionResult Index()
+        {
+            var model = _transactionData.GetAll();
+
+            return View(model);
         }
     }
 }

@@ -1,0 +1,22 @@
+﻿@model IEnumerable<UltraBudget.Models.Transaction>
+
+<html>
+<head>
+    <title>
+        UltraBudget
+    </title>
+</head>
+<body>
+    <h1>Transactions</h1>
+    <table>
+        @foreach (var transaction in Model)
+        {
+            <tr>
+                <td>@transaction.Id</td>
+                <td>@transaction.Amount</td>
+                <td>@transaction.Date</td>
+            </tr>
+        }
+    </table>
+</body>
+</html>
