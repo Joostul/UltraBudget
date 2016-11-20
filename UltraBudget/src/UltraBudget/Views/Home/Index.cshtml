@@ -9,12 +9,17 @@
 <body>
     <h1>Transactions</h1>
     <table>
+        <tr>
+            <td>ID</td>
+            <td>Amount</td>
+            <td>Date</td>
+        </tr>
         @foreach (var transaction in Model)
         {
             <tr>
                 <td>@transaction.Id</td>
                 <td>@transaction.Amount</td>
-                <td>@transaction.Date</td>
+                <td>@transaction.Date.Day/@transaction.Date.Month/@transaction.Date.Year</td>
             </tr>
         }
     </table>
