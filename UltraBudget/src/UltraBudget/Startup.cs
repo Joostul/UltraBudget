@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
@@ -10,6 +6,8 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Routing;
 using UltraBudget.Services;
+using UltraBudget.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace UltraBudget
 {
@@ -34,7 +32,9 @@ namespace UltraBudget
             services.AddMvc();
             services.AddSingleton(Configuration);
             services.AddSingleton<IGreeter, Greeter>();
-            services.AddScoped<ITransactionData, InMemoryTransactionData>();
+            services.AddScoped<ITransactionData, SqlTransactionData>();
+            services.AddDbContext<UltraBudgetDbContext>(options => 
+                options.UseSqlServer(Configuration.GetConnectionString("UltraBudget")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

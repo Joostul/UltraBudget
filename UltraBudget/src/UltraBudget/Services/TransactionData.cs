@@ -12,6 +12,33 @@ namespace UltraBudget.Services
         Transaction Add(Transaction newTransaction);
     }
 
+    public class SqlTransactionData: ITransactionData
+    {
+        private UltraBudgetDbContext _context;
+
+        public SqlTransactionData(UltraBudgetDbContext context)
+        {
+            context = _context;
+        }
+
+        public Transaction Add(Transaction newTransaction)
+        {
+            _context.Add(newTransaction);
+            _context.SaveChanges();
+            return newTransaction;
+        }
+
+        public Transaction Get(int id)
+        {
+            return _context.Transactions.FirstOrDefault(t => t.Id == id);
+        }
+
+        public IEnumerable<Transaction> GetAll()
+        {
+            return _context.Transactions;
+        }
+    }
+
     public class InMemoryTransactionData : ITransactionData
     {
         static InMemoryTransactionData()
