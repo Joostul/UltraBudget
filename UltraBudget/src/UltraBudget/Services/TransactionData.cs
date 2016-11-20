@@ -1,19 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using UltraBudget.Models;
+using UltraBudget.Entities;
 
 namespace UltraBudget.Services
 {
     public interface ITransactionData
     {
         IEnumerable<Transaction> GetAll();
+        Transaction Get(int id);
+        Transaction Add(Transaction newTransaction);
     }
 
     public class InMemoryTransactionData : ITransactionData
     {
-        public InMemoryTransactionData()
+        static InMemoryTransactionData()
         {
             _transactions = new List<Transaction>()
             {
@@ -21,21 +22,23 @@ namespace UltraBudget.Services
                 {
                     Id = 1,
                     Amount = 1,
-                    Date = DateTime.Now
+                    Date = new DateTime(2016, 11, 19),
+                    Type = TransactionType.Credit
                 },
                 new Transaction
                 {
                     Id = 2,
                     Amount = 1,
-                    Date = DateTime.Now
+                    Date = new DateTime(2016, 11, 20),
+                    Type = TransactionType.Credit
                 },
                 new Transaction
                 {
                     Id = 3,
                     Amount = 2,
-                    Date = DateTime.Now
+                    Date = new DateTime(2016, 11, 20),
+                    Type = TransactionType.Credit
                 }
-
             };
         }
 
@@ -44,6 +47,19 @@ namespace UltraBudget.Services
             return _transactions;
         }
 
-        List<Transaction> _transactions;
+        public Transaction Get(int id)
+        {
+            return _transactions.FirstOrDefault(t => t.Id == id);
+        }
+
+        public Transaction Add(Transaction newTransaction)
+        {
+            newTransaction.Id = _transactions.Max(t => t.Id) + 1;
+            _transactions.Add(newTransaction);
+
+            return newTransaction;
+        }
+
+        static List<Transaction> _transactions;
     }
 }

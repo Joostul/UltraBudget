@@ -1,0 +1,23 @@
+﻿@using UltraBudget.Controllers
+@model UltraBudget.Entities.Transaction
+
+<html>
+<body>
+    <h1>@Model.ToString()</h1>
+    <div>
+        Id: @Model.Id
+    </div>
+    <div>
+        Amount: @Model.Amount
+    </div>
+    <div>
+        Date: @Model.Date
+    </div>
+    <div>
+        Type: @Model.Type
+    </div>
+    <div>
+        @Html.ActionLink("Home", nameof(HomeController.Index))
+    </div>
+</body>
+</html>

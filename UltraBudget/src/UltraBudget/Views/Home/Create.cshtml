@@ -1,0 +1,30 @@
+﻿@using UltraBudget.Entities
+@model Transaction
+
+<div>
+    <h1>Create new transaction</h1>
+
+    <div>
+        @using (Html.BeginForm())
+        {
+            <div>
+                @Html.LabelFor(m => m.Amount)
+                @Html.EditorFor(m => m.Amount)
+                @Html.ValidationMessageFor(m => m.Amount)
+            </div>
+            <div>
+                @Html.LabelFor(m => m.Date)
+                @Html.TextBoxFor(m => m.Date, new { type = "date" })
+                @Html.ValidationMessageFor(m => m.Date)
+            </div>
+            <div>
+                @Html.LabelFor(m => m.Type)
+                @Html.DropDownListFor(m => m.Type, Html.GetEnumSelectList(typeof(TransactionType)))
+                @Html.ValidationMessageFor(m => m.Type)
+            </div>
+            <div>
+                <input type="submit" value="Save"/>
+            </div>
+        }
+    </div>
+</div>
