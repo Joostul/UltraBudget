@@ -18,7 +18,7 @@ namespace UltraBudget.Services
 
         public SqlTransactionData(UltraBudgetDbContext context)
         {
-            context = _context;
+            _context = context;
         }
 
         public Transaction Add(Transaction newTransaction)
