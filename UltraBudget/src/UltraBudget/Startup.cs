@@ -49,8 +49,7 @@ namespace UltraBudget
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-            } else 
-            if (env.IsProduction())
+            } else
             {
                 app.UseExceptionHandler( new ExceptionHandlerOptions
                 {

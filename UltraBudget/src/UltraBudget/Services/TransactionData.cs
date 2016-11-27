@@ -10,6 +10,7 @@ namespace UltraBudget.Services
         IEnumerable<Transaction> GetAll();
         Transaction Get(int id);
         Transaction Add(Transaction newTransaction);
+        void Commit();
     }
 
     public class SqlTransactionData: ITransactionData
@@ -24,8 +25,12 @@ namespace UltraBudget.Services
         public Transaction Add(Transaction newTransaction)
         {
             _context.Add(newTransaction);
-            _context.SaveChanges();
             return newTransaction;
+        }
+
+        public void Commit()
+        {
+            _context.SaveChanges();
         }
 
         public Transaction Get(int id)
@@ -85,6 +90,11 @@ namespace UltraBudget.Services
             _transactions.Add(newTransaction);
 
             return newTransaction;
+        }
+
+        public void Commit()
+        {
+            // Not needed to save in memory datasource
         }
 
         static List<Transaction> _transactions;

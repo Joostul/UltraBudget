@@ -38,6 +38,33 @@ namespace UltraBudget.Controllers
         }
 
         [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            var model = _transactionData.Get(id);
+            if(model == null)
+            {
+                return RedirectToAction("Index");                
+            }
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(int id, TransactionEditViewModel model)
+        {
+            var transaction = _transactionData.Get(id);
+            if(ModelState.IsValid)
+            {
+                transaction.Amount = model.Amount;
+                transaction.Date = model.Date;
+                transaction.Type = model.Type;
+                _transactionData.Commit();
+                return RedirectToAction("Details", new { id = transaction.Id });
+            }
+            return View(transaction);
+        }
+
+        [HttpGet]
         public IActionResult Create()
         {
             return View();
@@ -54,7 +81,7 @@ namespace UltraBudget.Controllers
                 newTransaction.Date = model.Date;
                 newTransaction.Type = model.Type;
                 newTransaction = _transactionData.Add(newTransaction);
-
+                _transactionData.Commit();
                 return RedirectToAction("Details", new { id = newTransaction.Id });
             }
 

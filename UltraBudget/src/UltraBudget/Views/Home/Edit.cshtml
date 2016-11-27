@@ -1,0 +1,32 @@
+﻿@model Transaction
+
+@{ 
+    ViewBag.Title = $"Edit {Model.Id}";
+}
+
+<div>
+    <h1>Edit Transaction @Model.Id</h1>
+
+    <div>
+        <form method="post" asp-antiforgery="true">
+            <div>
+                <label asp-for="Amount"></label>
+                <input asp-for="Amount"/>
+                <span asp-validation-for="Amount"></span>
+            </div>
+            <div>
+                @Html.LabelFor(m => m.Date)
+                @Html.TextBoxFor(m => m.Date, new { type = "date" })
+                @Html.ValidationMessageFor(m => m.Date)
+            </div>
+            <div>
+                <label asp-for="Type"></label>
+                <select asp-for="Type" asp-items="@Html.GetEnumSelectList(typeof(TransactionType))"></select>
+                <span asp-validation-for="Type"></span>
+            </div>
+            <div>
+                <input type="submit" value="Save" />
+            </div>
+        </form>
+    </div>
+</div>
