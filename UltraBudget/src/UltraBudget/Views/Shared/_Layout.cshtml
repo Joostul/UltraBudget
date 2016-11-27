@@ -4,22 +4,42 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
+    <link href="/node_modules/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
 </head>
 <body>
-    <div>
-        @await Component.InvokeAsync("LoginLogout")
-    </div>
-    <div>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/">UltraBudget</a>
+            </div>
+            <div class="navbar-right">
+                @await Component.InvokeAsync("LoginLogout")
+            </div>
+        </div>
+    </nav>
+    <div class="container">
         @RenderBody()
+        <total>
+            @RenderSection("total", required: false)
+        </total>
     </div>
-    <total>
-        @RenderSection("total", required: false)
-    </total>
-    <footer>
-        <p>
-            @RenderSection("footer", required: false)
-            @await Component.InvokeAsync("Greeting")
-        </p>
-    </footer>
+    <div class="panel-footer">
+        <footer>
+            <p>
+                @RenderSection("footer", required: false)
+                @await Component.InvokeAsync("Greeting")
+            </p>
+        </footer>
+    </div>
+    <environment names="Development">
+        <script src="/node_modules/jquery/dist/jquery.js"></script>
+        <script src="/node_modules/jquery-validation/dist/jquery.validate.js"></script>
+        <script src="/node_modules/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+    </environment>
+    <environment names="Staging, Production">
+        <script src="/node_modules/jquery/dist/jquery.js"></script>
+        <script src="/node_modules/jquery-validation/dist/jquery.validate.js"></script>
+        <script src="/node_modules/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+    </environment>
 </body>
 </html>

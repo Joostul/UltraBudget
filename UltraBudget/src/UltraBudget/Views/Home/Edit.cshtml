@@ -11,13 +11,13 @@
         <form method="post" asp-antiforgery="true">
             <div>
                 <label asp-for="Amount"></label>
-                <input asp-for="Amount"/>
+                <input asp-for="Amount" />
                 <span asp-validation-for="Amount"></span>
             </div>
             <div>
-                @Html.LabelFor(m => m.Date)
-                @Html.TextBoxFor(m => m.Date, new { type = "date" })
-                @Html.ValidationMessageFor(m => m.Date)
+                <label asp-for="Date"></label>
+                <input asp-for="Date" />
+                <span asp-validation-for="Date"></span>
             </div>
             <div>
                 <label asp-for="Type"></label>

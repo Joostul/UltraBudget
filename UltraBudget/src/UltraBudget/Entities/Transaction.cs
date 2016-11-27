@@ -5,8 +5,10 @@ namespace UltraBudget.Entities
 {
     public enum TransactionType
     {
-        Debit,
-        Credit
+        [Display(Name = "Credit")]
+        Credit = 1,
+        [Display(Name = "Debit")]
+        Debit = 2
     }
 
     public class Transaction

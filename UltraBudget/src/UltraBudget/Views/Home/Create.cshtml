@@ -1,6 +1,6 @@
 ﻿@model Transaction
 
-@{ 
+@{
     ViewBag.Title = "Create";
 }
 
@@ -8,26 +8,25 @@
     <h1>Create new Transaction</h1>
 
     <div>
-        @using (Html.BeginForm())
-        {
+        <form method="post" asp-antiforgery="true">
             <div>
-                @Html.LabelFor(m => m.Amount)
-                @Html.EditorFor(m => m.Amount)
-                @Html.ValidationMessageFor(m => m.Amount)
+                <label asp-for="Amount"></label>
+                <input asp-for="Amount" />
+                <span asp-validation-for="Amount"></span>
             </div>
             <div>
-                @Html.LabelFor(m => m.Date)
-                @Html.TextBoxFor(m => m.Date, new { type = "date" })
-                @Html.ValidationMessageFor(m => m.Date)
+                <label asp-for="Date"></label>
+                <input asp-for="Date" />
+                <span asp-validation-for="Date"></span>
             </div>
             <div>
-                @Html.LabelFor(m => m.Type)
-                @Html.DropDownListFor(m => m.Type, Html.GetEnumSelectList(typeof(TransactionType)))
-                @Html.ValidationMessageFor(m => m.Type)
+                <label asp-for="Type"></label>
+                <select asp-for="Type" asp-items="@Html.GetEnumSelectList(typeof(TransactionType))"></select>
+                <span asp-validation-for="Type"></span>
             </div>
             <div>
-                <input type="submit" value="Save"/>
+                <input type="submit" value="Save" />
             </div>
-        }
+        </form>
     </div>
 </div>

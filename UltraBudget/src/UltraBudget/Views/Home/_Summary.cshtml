@@ -1,16 +1,9 @@
 ﻿@model Transaction
-<section>
-    <div>
-        @Model.Amount
-    </div>
-    <div>
-        @Model.Date.Day/@Model.Date.Month/@Model.Date.Year
-    </div>
-    <div>
-        @Model.Type
-    </div>
-    <div>
-        <a asp-action="Details" asp-route-id="@Model.Id">Detail</a>
-        <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
-    </div>
-</section>
+
+<tr>
+    <td>@Model.Amount</td>
+    <td>@Model.Date.Day/@Model.Date.Month/@Model.Date.Year</td>
+    <td>@Model.Type</td>
+    <td class=""><a class="btn btn-primary" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+    <a class="btn btn-primary" asp-action="Details" asp-route-id="@Model.Id">Detail</a></td>
+</tr>

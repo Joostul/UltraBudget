@@ -61,12 +61,9 @@ namespace UltraBudget
             }
 
             app.UseFileServer();
-
+            app.UserNodeModules(env.ContentRootPath);
             app.UseIdentity();
-
             app.UseMvc(ConfigureRoutes);
-
-            app.Run(ctx => ctx.Response.WriteAsync("URL not found"));
         }
 
         private void ConfigureRoutes(IRouteBuilder routeBuilder)

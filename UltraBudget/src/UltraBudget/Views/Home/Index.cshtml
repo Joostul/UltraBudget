@@ -6,13 +6,22 @@
 }
 
 <h1>Transactions</h1>
-
-@foreach (var transaction in Model.Transactions)
-{
-    @Html.Partial("_Summary", transaction)
-}
+<table class="table table-responsive">
+    <thead>
+        <tr>
+            <th>Amount</th>
+            <th>Date</th>
+            <th>Type</th>
+            <th></th>
+        </tr>
+    </thead>
+    @foreach (var transaction in Model.Transactions)
+    {
+        @Html.Partial("_Summary", transaction)
+    }
+</table>
 <div>
-    <a asp-action="Create">Create</a>
+    <a class="btn btn-primary" asp-action="Create">Create</a>
 </div>
 
 @section total {
