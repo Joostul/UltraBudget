@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Routing;
 using UltraBudget.Services;
 using UltraBudget.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace UltraBudget
 {
@@ -35,6 +36,8 @@ namespace UltraBudget
             services.AddScoped<ITransactionData, SqlTransactionData>();
             services.AddDbContext<UltraBudgetDbContext>(options => 
                 options.UseSqlServer(Configuration.GetConnectionString("UltraBudget")));
+            services.AddIdentity<User, IdentityRole>()
+                .AddEntityFrameworkStores<UltraBudgetDbContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -58,6 +61,8 @@ namespace UltraBudget
             }
 
             app.UseFileServer();
+
+            app.UseIdentity();
 
             app.UseMvc(ConfigureRoutes);
 

@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using UltraBudget.Entities;
 using UltraBudget.Services;
 using UltraBudget.ViewModels;
 
 namespace UltraBudget.Controllers
 {
+    [Authorize]
     //[Route("[controller]/[action]")]
     public class HomeController: Controller
     {
@@ -17,6 +19,7 @@ namespace UltraBudget.Controllers
             _greeter = greeter;
         }
 
+        [AllowAnonymous]
         public IActionResult Index()
         {
             var model = new HomePageViewModel();
@@ -25,7 +28,6 @@ namespace UltraBudget.Controllers
 
             return View(model);
         }
-
         public IActionResult Details(int id)
         {
             var model = _transactionData.Get(id);
