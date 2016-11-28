@@ -14,7 +14,6 @@ namespace UltraBudget.Controllers
         private IGreeter _greeter;
         private ITransactionData _transactionData;
         private UserManager<User> _userManager;
-        private string _currentUserId;
 
         public HomeController(ITransactionData transactionData, IGreeter greeter, UserManager<User> userManager)
         {
