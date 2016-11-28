@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using UltraBudget.Entities;
 using UltraBudget.Services;
@@ -12,18 +13,21 @@ namespace UltraBudget.Controllers
     {
         private IGreeter _greeter;
         private ITransactionData _transactionData;
+        private UserManager<User> _userManager;
+        private string _currentUserId;
 
-        public HomeController(ITransactionData transactionData, IGreeter greeter)
+        public HomeController(ITransactionData transactionData, IGreeter greeter, UserManager<User> userManager)
         {
             _transactionData = transactionData;
             _greeter = greeter;
+            _userManager = userManager;
         }
 
         [AllowAnonymous]
         public IActionResult Index()
         {
             var model = new HomePageViewModel();
-            model.Transactions = _transactionData.GetAll();
+            model.Transactions = _transactionData.GetAllForCurrentUser(_userManager.GetUserId(HttpContext.User));
             model.Greeting = _greeter.GetGreeting();
 
             return View(model);
@@ -60,6 +64,7 @@ namespace UltraBudget.Controllers
                 transaction.Amount = model.Amount;
                 transaction.Date = model.Date;
                 transaction.Type = model.Type;
+                transaction.UserId = _userManager.GetUserId(HttpContext.User);
                 _transactionData.Commit();
                 return RedirectToAction("Details", new { id = transaction.Id });
             }
@@ -82,6 +87,7 @@ namespace UltraBudget.Controllers
                 newTransaction.Amount = model.Amount;
                 newTransaction.Date = model.Date;
                 newTransaction.Type = model.Type;
+                newTransaction.UserId = _userManager.GetUserId(HttpContext.User);
                 newTransaction = _transactionData.Add(newTransaction);
                 _transactionData.Commit();
                 return RedirectToAction("Details", new { id = newTransaction.Id });

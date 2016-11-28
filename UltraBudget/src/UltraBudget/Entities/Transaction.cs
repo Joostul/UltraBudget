@@ -25,5 +25,7 @@ namespace UltraBudget.Entities
 
         [Display(Name = "Transaction Type")]
         public TransactionType Type { get; set; }
+        
+        public string UserId { get; set; }
     }
 }

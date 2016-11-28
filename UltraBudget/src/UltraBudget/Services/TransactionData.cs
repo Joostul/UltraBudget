@@ -8,6 +8,7 @@ namespace UltraBudget.Services
     public interface ITransactionData
     {
         IEnumerable<Transaction> GetAll();
+        IEnumerable<Transaction> GetAllForCurrentUser(string userId);
         Transaction Get(int id);
         Transaction Add(Transaction newTransaction);
         void Commit();
@@ -41,6 +42,11 @@ namespace UltraBudget.Services
         public IEnumerable<Transaction> GetAll()
         {
             return _context.Transactions;
+        }
+
+        public IEnumerable<Transaction> GetAllForCurrentUser(string userId)
+        {
+            return _context.Transactions.Where(u => u.UserId == userId);
         }
     }
 
@@ -95,6 +101,11 @@ namespace UltraBudget.Services
         public void Commit()
         {
             // Not needed to save in memory datasource
+        }
+
+        public IEnumerable<Transaction> GetAllForCurrentUser(string userId)
+        {
+            return _transactions.Where(u => u.UserId == userId);
         }
 
         static List<Transaction> _transactions;
