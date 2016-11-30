@@ -14,18 +14,20 @@ namespace UltraBudget.Services
 
     public class Greeter : IGreeter
     {
-        private Greeting _greeting;
+        private IEnumerable<Greeting> _greetings;
+        private int _amountOfGreetings;
 
         public Greeter(UltraBudgetDbContext context)
         {
-            Random rand = new Random();
-            int amountToSkip = rand.Next(0, context.Greetings.Count());
-            _greeting = context.Greetings.OrderBy(r => Guid.NewGuid()).Skip(amountToSkip).Take(1).FirstOrDefault();
+            _greetings = context.Greetings;
+            _amountOfGreetings = context.Greetings.Count();
         }
 
         public string GetGreeting()
         {
-            return _greeting.Message;
+            Random rand = new Random();
+            int amountToSkip = rand.Next(0, _amountOfGreetings);
+            return _greetings.OrderBy(r => Guid.NewGuid()).Skip(amountToSkip).Take(1).FirstOrDefault().Message;
         }
     }
 }
