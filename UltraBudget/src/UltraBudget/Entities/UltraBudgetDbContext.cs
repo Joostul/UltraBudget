@@ -12,5 +12,7 @@ namespace UltraBudget.Entities
         }
 
         public DbSet<Transaction> Transactions { get; set; }
+
+        public DbSet<Greeting> Greetings { get; set; }
     }
 }

@@ -8,9 +8,10 @@ using UltraBudget.Entities;
 namespace UltraBudget.Migrations
 {
     [DbContext(typeof(UltraBudgetDbContext))]
-    partial class UltraBudgetDbContextModelSnapshot : ModelSnapshot
+    [Migration("20161130102254_Greetings")]
+    partial class Greetings
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.0-rtm-21431")
@@ -132,7 +133,7 @@ namespace UltraBudget.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Greetings");
+                    b.ToTable("AllGreetings");
                 });
 
             modelBuilder.Entity("UltraBudget.Entities.Transaction", b =>
