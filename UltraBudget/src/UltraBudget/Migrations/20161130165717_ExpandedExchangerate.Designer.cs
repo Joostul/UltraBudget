@@ -8,9 +8,10 @@ using UltraBudget.Entities;
 namespace UltraBudget.Migrations
 {
     [DbContext(typeof(UltraBudgetDbContext))]
-    partial class UltraBudgetDbContextModelSnapshot : ModelSnapshot
+    [Migration("20161130165717_ExpandedExchangerate")]
+    partial class ExpandedExchangerate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.0-rtm-21431")
@@ -254,7 +255,7 @@ namespace UltraBudget.Migrations
 
                     b.HasIndex("CurrencyId");
 
-                    b.ToTable("Wallets");
+                    b.ToTable("Wallet");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRoleClaim<string>", b =>

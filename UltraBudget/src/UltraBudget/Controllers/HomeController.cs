@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Collections.Generic;
 using UltraBudget.Entities;
 using UltraBudget.Services;
 using UltraBudget.ViewModels;
@@ -63,6 +65,15 @@ namespace UltraBudget.Controllers
                 transaction.Amount = model.Amount;
                 transaction.Date = model.Date;
                 transaction.Type = model.Type;
+                transaction.Wallet = model.Wallet;
+                if(transaction.Type == TransactionType.Invest)
+                {
+                    transaction.Price = model.Price;
+                }
+                else
+                {
+                    transaction.Price = null;
+                }
                 transaction.UserId = _userManager.GetUserId(HttpContext.User);
                 _transactionData.Commit();
                 return RedirectToAction("Details", new { id = transaction.Id });
@@ -73,6 +84,9 @@ namespace UltraBudget.Controllers
         [HttpGet]
         public IActionResult Create()
         {
+            var walletsList = _transactionData.GetAllWalletsForCurrentUser(_userManager.GetUserId(HttpContext.User));
+            ViewBag.Wallets = new SelectList(walletsList);
+
             return View();
         }
 

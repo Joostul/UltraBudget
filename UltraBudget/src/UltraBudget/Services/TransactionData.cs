@@ -12,6 +12,7 @@ namespace UltraBudget.Services
         Transaction Get(int id);
         Transaction Add(Transaction newTransaction);
         void Commit();
+        IEnumerable<Wallet> GetAllWalletsForCurrentUser(string userId);
     }
 
     public class SqlTransactionData: ITransactionData
@@ -48,66 +49,12 @@ namespace UltraBudget.Services
         {
             return _context.Transactions.Where(u => u.UserId == userId);
         }
-    }
 
-    public class InMemoryTransactionData : ITransactionData
-    {
-        static InMemoryTransactionData()
+        public IEnumerable<Wallet> GetAllWalletsForCurrentUser(string userId)
         {
-            _transactions = new List<Transaction>()
-            {
-                new Transaction
-                {
-                    Id = 1,
-                    Amount = 1,
-                    Date = new DateTime(2016, 11, 19),
-                    Type = TransactionType.Credit
-                },
-                new Transaction
-                {
-                    Id = 2,
-                    Amount = 1,
-                    Date = new DateTime(2016, 11, 20),
-                    Type = TransactionType.Credit
-                },
-                new Transaction
-                {
-                    Id = 3,
-                    Amount = 2,
-                    Date = new DateTime(2016, 11, 20),
-                    Type = TransactionType.Credit
-                }
-            };
+            var wallets = _context.Wallets;
+
+            return wallets;
         }
-
-        public IEnumerable<Transaction> GetAll()
-        {
-            return _transactions;
-        }
-
-        public Transaction Get(int id)
-        {
-            return _transactions.FirstOrDefault(t => t.Id == id);
-        }
-
-        public Transaction Add(Transaction newTransaction)
-        {
-            newTransaction.Id = _transactions.Max(t => t.Id) + 1;
-            _transactions.Add(newTransaction);
-
-            return newTransaction;
-        }
-
-        public void Commit()
-        {
-            // Not needed to save in memory datasource
-        }
-
-        public IEnumerable<Transaction> GetAllForCurrentUser(string userId)
-        {
-            return _transactions.Where(u => u.UserId == userId);
-        }
-
-        static List<Transaction> _transactions;
     }
 }
