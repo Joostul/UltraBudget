@@ -12,5 +12,7 @@ namespace UltraBudget.Entities
         public string Name { get; set; }
 
         public Currency Currency { get; set; }
+
+        public string UserId { get; set; }
     }
 }

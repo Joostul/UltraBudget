@@ -13,6 +13,8 @@ namespace UltraBudget.Services
         Transaction Add(Transaction newTransaction);
         void Commit();
         IEnumerable<Wallet> GetAllWalletsForCurrentUser(string userId);
+
+        Wallet GetWalletBasedOnName(string WalletName);
     }
 
     public class SqlTransactionData: ITransactionData
@@ -52,9 +54,16 @@ namespace UltraBudget.Services
 
         public IEnumerable<Wallet> GetAllWalletsForCurrentUser(string userId)
         {
-            var wallets = _context.Wallets;
+            var wallets = _context.Wallets.Where(u => u.UserId == userId);
 
             return wallets;
+        }
+
+        public Wallet GetWalletBasedOnName(string walletName)
+        {
+            var wallet = _context.Wallets.FirstOrDefault(u => u.Name == walletName);
+
+            return wallet;
         }
     }
 }

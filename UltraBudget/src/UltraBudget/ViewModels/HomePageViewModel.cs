@@ -8,5 +8,6 @@ namespace UltraBudget.ViewModels
         // Needs to be set to something else later
         public string Greeting { get; set; }
         public IEnumerable<Transaction> Transactions { get; set; }
+        public IEnumerable<Wallet> Wallets { get; set; }
     }
 }
