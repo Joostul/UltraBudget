@@ -28,6 +28,8 @@ namespace UltraBudget.Entities
         [Display(Name = "Transaction Type")]
         public TransactionType Type { get; set; }
 
+        //public int WalletId { get; set; }
+
         [Display(Name = "Wallet")]
         public Wallet Wallet { get; set; }
 

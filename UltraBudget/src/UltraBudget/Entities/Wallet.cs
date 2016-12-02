@@ -14,5 +14,7 @@ namespace UltraBudget.Entities
         public Currency Currency { get; set; }
 
         public string UserId { get; set; }
+
+        public ICollection<Transaction> Transactions { get; set; }
     }
 }

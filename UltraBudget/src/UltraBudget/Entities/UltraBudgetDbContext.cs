@@ -8,7 +8,7 @@ namespace UltraBudget.Entities
     {
         public UltraBudgetDbContext(DbContextOptions options) : base(options)
         {
-            
+
         }
 
         public DbSet<Transaction> Transactions { get; set; }

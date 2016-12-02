@@ -25,6 +25,11 @@
                 <span asp-validation-for="Type"></span>
             </div>
             <div>
+                <label asp-for="Wallet"></label>
+                <select asp-for="Wallet" asp-items="@ViewBag.Wallets"></select>
+                <span asp-validation-for="Wallet"></span>
+            </div>
+            <div>
                 <input type="submit" value="Save" />
             </div>
         </form>

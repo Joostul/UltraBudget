@@ -30,9 +30,9 @@ namespace UltraBudget.Controllers
         {
             _currentUserId = _userManager.GetUserId(HttpContext.User);
             var model = new HomePageViewModel();
-            model.Transactions = _transactionData.GetAllForCurrentUser(_currentUserId);
+            model.Transactions = _transactionData.GetTransactionsForCurrentUser(_currentUserId);
             model.Greeting = _greeter.GetGreeting();
-            model.Wallets = _transactionData.GetAllWalletsForCurrentUser(_currentUserId);
+            model.Wallets = _transactionData.GetWalletsForCurrentUser(_currentUserId);
 
             return View(model);
         }
@@ -50,6 +50,7 @@ namespace UltraBudget.Controllers
         [HttpGet]
         public IActionResult Edit(int id)
         {
+            ViewBag.Wallets = new SelectList(_transactionData.GetWalletNamesForCurrentUser(_currentUserId));
             var model = _transactionData.Get(id);
             if(model == null)
             {
@@ -68,7 +69,7 @@ namespace UltraBudget.Controllers
                 transaction.Amount = model.Amount;
                 transaction.Date = model.Date;
                 transaction.Type = model.Type;
-                transaction.Wallet = model.Wallet;
+                transaction.Wallet = _transactionData.GetWalletBasedOnName(model.Wallet);
                 if(transaction.Type == TransactionType.Invest)
                 {
                     transaction.Price = model.Price;
@@ -87,21 +88,7 @@ namespace UltraBudget.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            var walletsList = _transactionData.GetAllWalletsForCurrentUser(_currentUserId);
-
-            if(walletsList == null)
-            {
-                ViewBag.Wallets = new SelectList("No wallets detected.");
-                return View();
-            }
-            List<string> walletsNames = new List<string>();
-
-            foreach(Wallet w in walletsList)
-            {
-                walletsNames.Add(w.Name);
-            }
-
-            ViewBag.Wallets = new SelectList(walletsNames);
+            ViewBag.Wallets = new SelectList(_transactionData.GetWalletNamesForCurrentUser(_currentUserId));
 
             return View();
         }
@@ -117,7 +104,7 @@ namespace UltraBudget.Controllers
                 newTransaction.Date = model.Date;
                 newTransaction.Type = model.Type;
                 newTransaction.UserId = _currentUserId;
-                newTransaction.Wallet = _transactionData.GetWalletBasedOnName(model.Wallet.Name);
+                newTransaction.Wallet = _transactionData.GetWalletBasedOnName(model.Wallet);
                 newTransaction = _transactionData.Add(newTransaction);
                 _transactionData.Commit();
                 return RedirectToAction("Details", new { id = newTransaction.Id });

@@ -20,11 +20,14 @@
         Type: @Model.Type
     </div>
     <div>
-        Wallet: @Model.Wallet
+        Wallet: @Model.Wallet.Name
     </div>
-    <div>
-        Price: @Model.Price
-    </div>
+    @if (Model.Type == TransactionType.Invest)
+    {
+        <div>
+            Price: @Model.Price
+        </div>
+    }
     <div>
         UserName: @User.Identity.Name
     </div>
