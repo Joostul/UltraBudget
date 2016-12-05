@@ -36,6 +36,7 @@ namespace UltraBudget.Controllers
 
             return View(model);
         }
+
         public IActionResult Details(int id)
         {
             var model = _transactionData.Get(id);

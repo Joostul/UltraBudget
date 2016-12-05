@@ -12,6 +12,12 @@
             <div class="navbar-header">
                 <a class="navbar-brand" href="/">UltraBudget</a>
             </div>
+            <ul class="nav navbar-nav">
+                <li class="active"><a asp-controller="Wallets" asp-action="Index">Wallets<span class="sr-only">(current)</span></a></li>
+                <li><a asp-controller="Reports" asp-action="Index">Reports</a></li>
+                <li><a asp-controller="Wishlist" asp-action="Index">Wishlist</a></li>
+                <li><a asp-controller="About" asp-action="Phone">About</a></li>
+            </ul>
             <div class="navbar-right">
                 @await Component.InvokeAsync("LoginLogout")
             </div>
