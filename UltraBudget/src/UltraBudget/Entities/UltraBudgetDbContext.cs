@@ -16,5 +16,7 @@ namespace UltraBudget.Entities
         public DbSet<Greeting> Greetings { get; set; }
 
         public DbSet<Wallet> Wallets { get; set; }
+
+        public DbSet<Currency> Currencies { get; set; }
     }
 }

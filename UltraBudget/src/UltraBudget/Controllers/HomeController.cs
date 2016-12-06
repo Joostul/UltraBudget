@@ -96,19 +96,27 @@ namespace UltraBudget.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(TransactionEditViewModel model)
+        public IActionResult Create(Wallet model)
         {
             if(ModelState.IsValid)
             {
-                var newTransaction = new Transaction();
-                newTransaction.Amount = model.Amount;
-                newTransaction.Date = model.Date;
-                newTransaction.Type = model.Type;
-                newTransaction.UserId = _currentUserId;
-                newTransaction.Wallet = _transactionData.GetWalletBasedOnName(model.Wallet);
-                newTransaction = _transactionData.Add(newTransaction);
-                _transactionData.Commit();
-                return RedirectToAction("Details", new { id = newTransaction.Id });
+                var newWallet = new Wallet();
+                newWallet.Currency = model.Currency;
+                newWallet.Name = model.Name;
+                newWallet.UserId = _currentUserId;
+                newWallet.Transactions = new List<Transaction>();
+
+                newWallet = _transactionData.Add(newWallet);
+
+                //var newTransaction = new Transaction();
+                //newTransaction.Amount = model.Amount;
+                //newTransaction.Date = model.Date;
+                //newTransaction.Type = model.Type;
+                //newTransaction.UserId = _currentUserId;
+                //newTransaction.Wallet = _transactionData.GetWalletBasedOnName(model.Wallet);
+                //newTransaction = _transactionData.Add(newTransaction);
+                //_transactionData.Commit();
+                return RedirectToAction("Details", new { id = newWallet.Id });
             }
 
             return View();

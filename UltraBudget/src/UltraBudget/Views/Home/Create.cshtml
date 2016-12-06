@@ -1,33 +1,23 @@
-﻿@model Transaction
+﻿@model Wallet
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Create new Wallet";
 }
 
 <div>
-    <h1>Create new Transaction</h1>
+    <h1>Create new Wallet</h1>
 
     <div>
         <form method="post" asp-antiforgery="true">
             <div>
-                <label asp-for="Amount"></label>
-                <input asp-for="Amount" />
-                <span asp-validation-for="Amount"></span>
+                <label asp-for="Name"></label>
+                <input asp-for="Name" />
+                <span asp-validation-for="Name"></span>
             </div>
             <div>
-                <label asp-for="Date"></label>
-                <input asp-for="Date" class="form-control datepicker" />
-                <span asp-validation-for="Date"></span>
-            </div>
-            <div>
-                <label asp-for="Type"></label>
-                <select asp-for="Type" asp-items="@Html.GetEnumSelectList(typeof(TransactionType))"></select>
-                <span asp-validation-for="Type"></span>
-            </div>
-            <div>
-                <label asp-for="Wallet"></label>
-                <select asp-for="Wallet" asp-items="@ViewBag.Wallets"></select>
-                <span asp-validation-for="Wallet"></span>
+                <label asp-for="Currency"></label>
+                <select asp-for="Currency" asp-items="@ViewBag.Currencies.Name" ></select>
+                <span asp-validation-for="Currency"></span>
             </div>
             <div>
                 <input type="submit" value="Save" />

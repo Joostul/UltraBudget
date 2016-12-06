@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UltraBudget.Entities;
+using System;
 
 namespace UltraBudget.Services
 {
@@ -14,11 +15,11 @@ namespace UltraBudget.Services
         void Commit();
         IEnumerable<Wallet> GetWalletsForCurrentUser(string userId);
         IEnumerable<string> GetWalletNamesForCurrentUser(string userId);
-
+        IEnumerable<Currency> GetCurrenciesForCurrentUser(string userId);
         Wallet GetWalletBasedOnName(string WalletName);
     }
 
-    public class SqlTransactionData: ITransactionData
+    public class SqlTransactionData : ITransactionData
     {
         private UltraBudgetDbContext _context;
 
@@ -66,7 +67,7 @@ namespace UltraBudget.Services
 
             List<string> walletNames = new List<string>();
 
-            foreach(var wallet in wallets)
+            foreach (var wallet in wallets)
             {
                 walletNames.Add(wallet.Name);
             }
@@ -79,6 +80,13 @@ namespace UltraBudget.Services
             var wallet = _context.Wallets.Include(c => c.Currency).ToArray().FirstOrDefault(u => u.Name == walletName);
 
             return wallet;
+        }
+
+        public IEnumerable<Currency> GetCurrenciesForCurrentUser(string userId)
+        {
+            var currencies = _context.Currencies;
+
+            return currencies;
         }
     }
 }
