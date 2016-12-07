@@ -11,7 +11,7 @@ namespace UltraBudget.Entities
 
         public string Name { get; set; }
 
-        public ExchangeRate ExchangeRate { get; set; }
+        public ICollection<ExchangeRate> ExchangeRate { get; set; }
 
         public bool MainCurrency { get; set; }
     }

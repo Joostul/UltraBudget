@@ -30,7 +30,6 @@ namespace UltraBudget.Controllers
         {
             _currentUserId = _userManager.GetUserId(HttpContext.User);
             var model = new HomePageViewModel();
-            model.Transactions = _transactionData.GetTransactionsForCurrentUser(_currentUserId);
             model.Greeting = _greeter.GetGreeting();
             model.Wallets = _transactionData.GetWalletsForCurrentUser(_currentUserId);
 
@@ -39,57 +38,26 @@ namespace UltraBudget.Controllers
 
         public IActionResult Details(int id)
         {
-            var model = _transactionData.Get(id);
-            if(model == null)
-            {
-                return RedirectToAction(nameof(Index));
-            }
-
-            return View(model);
+            return View();
         }
 
         [HttpGet]
         public IActionResult Edit(int id)
         {
-            ViewBag.Wallets = new SelectList(_transactionData.GetWalletNamesForCurrentUser(_currentUserId));
-            var model = _transactionData.Get(id);
-            if(model == null)
-            {
-                return RedirectToAction("Index");                
-            }
-            return View(model);
+            return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(int id, TransactionEditViewModel model)
         {
-            var transaction = _transactionData.Get(id);
-            if(ModelState.IsValid)
-            {
-                transaction.Amount = model.Amount;
-                transaction.Date = model.Date;
-                transaction.Type = model.Type;
-                transaction.Wallet = _transactionData.GetWalletBasedOnName(model.Wallet);
-                if(transaction.Type == TransactionType.Invest)
-                {
-                    transaction.Price = model.Price;
-                }
-                else
-                {
-                    transaction.Price = null;
-                }
-                transaction.UserId = _currentUserId;
-                _transactionData.Commit();
-                return RedirectToAction("Details", new { id = transaction.Id });
-            }
-            return View(transaction);
+            return View();
         }
 
         [HttpGet]
         public IActionResult Create()
         {
-            ViewBag.Wallets = new SelectList(_transactionData.GetWalletNamesForCurrentUser(_currentUserId));
+            ViewBag.Currencies = new SelectList(_transactionData.GetCurrencieNamesForCurrentUser(_currentUserId));
 
             return View();
         }
@@ -107,16 +75,9 @@ namespace UltraBudget.Controllers
                 newWallet.Transactions = new List<Transaction>();
 
                 newWallet = _transactionData.Add(newWallet);
-
-                //var newTransaction = new Transaction();
-                //newTransaction.Amount = model.Amount;
-                //newTransaction.Date = model.Date;
-                //newTransaction.Type = model.Type;
-                //newTransaction.UserId = _currentUserId;
-                //newTransaction.Wallet = _transactionData.GetWalletBasedOnName(model.Wallet);
-                //newTransaction = _transactionData.Add(newTransaction);
-                //_transactionData.Commit();
-                return RedirectToAction("Details", new { id = newWallet.Id });
+                _transactionData.Commit();
+                //return RedirectToAction("Details", new { id = newWallet.Id });
+                return View();
             }
 
             return View();

@@ -1,7 +1,7 @@
-﻿@model UltraBudget.Entities.Transaction
+﻿@model UltraBudget.Entities.Wallet
 
 @{
-    ViewBag.Title = "Transaction details";
+    ViewBag.Title = "Wallet details";
 }
 
 <html>
@@ -11,31 +11,16 @@
         Id: @Model.Id
     </div>
     <div>
-        Amount: @Model.Amount
+        Amount: @Model.Name
     </div>
     <div>
-        Date: @Model.Date
+        Amount: @Model.Currency
     </div>
     <div>
-        Type: @Model.Type
+        Amount: @Model.UserId
     </div>
     <div>
-        Wallet: @Model.Wallet.Name
-    </div>
-    @if (Model.Type == TransactionType.Invest)
-    {
-        <div>
-            Price: @Model.Price
-        </div>
-    }
-    <div>
-        UserName: @User.Identity.Name
-    </div>
-    <div>
-        UserId: @Model.UserId
-    </div>
-    <div>
-        @Html.ActionLink("Home", nameof(HomeController.Index))
+        <a><a asp-controller="Home" asp-action="Index">Home</a></a>
     </div>
 </body>
 </html>

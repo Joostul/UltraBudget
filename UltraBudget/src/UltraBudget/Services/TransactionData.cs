@@ -12,10 +12,11 @@ namespace UltraBudget.Services
         IEnumerable<Transaction> GetTransactionsForCurrentUser(string userId);
         Transaction Get(int id);
         Transaction Add(Transaction newTransaction);
+        Wallet Add(Wallet newWallet);
         void Commit();
         IEnumerable<Wallet> GetWalletsForCurrentUser(string userId);
         IEnumerable<string> GetWalletNamesForCurrentUser(string userId);
-        IEnumerable<Currency> GetCurrenciesForCurrentUser(string userId);
+        IEnumerable<string> GetCurrencieNamesForCurrentUser(string userId);
         Wallet GetWalletBasedOnName(string WalletName);
     }
 
@@ -32,6 +33,12 @@ namespace UltraBudget.Services
         {
             _context.Add(newTransaction);
             return newTransaction;
+        }
+
+        public Wallet Add(Wallet newWallet)
+        {
+            _context.Add(newWallet);
+            return newWallet;
         }
 
         public void Commit()
@@ -82,11 +89,17 @@ namespace UltraBudget.Services
             return wallet;
         }
 
-        public IEnumerable<Currency> GetCurrenciesForCurrentUser(string userId)
+        public IEnumerable<string> GetCurrencieNamesForCurrentUser(string userId)
         {
-            var currencies = _context.Currencies;
+            var currencies = _context.Currencies.ToArray();
 
-            return currencies;
+            List<string> currencyNames = new List<string>();
+
+            foreach (var currency in currencies)
+            {
+                currencyNames.Add(currency.Name);
+            }
+            return currencyNames;
         }
     }
 }

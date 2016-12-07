@@ -92,7 +92,8 @@ namespace UltraBudget.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            ViewBag.Currencies = new SelectList(_transactionData.GetCurrenciesForCurrentUser(_currentUserId));
+            ViewBag.Currencies = new SelectList(_transactionData.GetCurrencieNamesForCurrentUser(_currentUserId));
+            ViewBag.Wallets = new SelectList(_transactionData.GetWalletNamesForCurrentUser(_currentUserId));
 
             return View();
         }

@@ -23,11 +23,18 @@
             </div>
         </div>
     </nav>
-    <div class="container">
-        @RenderBody()
-        <total>
-            @RenderSection("total", required: false)
-        </total>
+    <div class="row">
+        <div class="col-md-2">
+            <ul class="nav nav-pills nav-stacked">
+
+            </ul>
+        </div>
+        <div class="col-md-10">
+            @RenderBody()
+            <total>
+                @RenderSection("total", required: false)
+            </total>
+        </div>
     </div>
     <div class="panel-footer">
         <footer>
