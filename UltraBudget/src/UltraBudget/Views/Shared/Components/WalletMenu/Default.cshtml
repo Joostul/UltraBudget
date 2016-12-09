@@ -1,0 +1,9 @@
+﻿@model List<string>
+
+
+@foreach (var wallet in Model)
+{
+    <li role="presentation">
+        <a asp-action="">@wallet</a>
+    </li>
+}
