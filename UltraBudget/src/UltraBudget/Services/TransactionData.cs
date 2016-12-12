@@ -15,7 +15,7 @@ namespace UltraBudget.Services
         Transaction Add(Transaction newTransaction);
         Wallet Add(Wallet newWallet);
         void Commit();
-        IEnumerable<Wallet> GetWalletsForCurrentUser(string userId);
+        List<Wallet> GetWalletsForCurrentUser(string userId);
         IEnumerable<string> GetWalletNamesForCurrentUser(string userId);
         IEnumerable<string> GetCurrencieNamesForCurrentUser(string userId);
         Wallet GetWalletBasedOnName(string WalletName);
@@ -74,12 +74,12 @@ namespace UltraBudget.Services
                 .ToArray();
         }
 
-        public IEnumerable<Wallet> GetWalletsForCurrentUser(string userId)
+        public List<Wallet> GetWalletsForCurrentUser(string userId)
         {
             var wallets = _context.Wallets
                 .Where(u => u.UserId == userId)
                 .Include(c => c.Currency)
-                .ToArray();
+                .ToList();
 
             return wallets;
         }

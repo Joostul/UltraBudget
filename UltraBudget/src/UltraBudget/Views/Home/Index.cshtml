@@ -5,6 +5,20 @@
 }
 
 <h1>Home</h1>
+<table class="table table-responsive">
+    <thead>
+        <tr>
+            <th>Wallet</th>
+            <th>Currency</th>
+            <th>Total</th>
+        </tr>
+    </thead>
+    @foreach (var wallet in Model.Wallets)
+    {
+        @Html.Partial("_Summary", wallet)
+    }
+</table>
+
 <div>
     <a class="btn btn-primary" asp-action="Create">Create new wallet</a>
 </div>

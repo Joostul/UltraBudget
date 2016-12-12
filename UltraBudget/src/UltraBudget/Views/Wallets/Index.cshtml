@@ -27,9 +27,10 @@
 </div>
 
 @section total {
+    @*TODO: filter each currency here and give totals in all currencies*@
     @foreach (var transaction in Model.Transactions)
     {
-        if (transaction.Type == TransactionType.Credit)
+        if (transaction.Type == TransactionType.Credit || transaction.Type == TransactionType.Invest)
         {
             totalAmount += transaction.Amount;
         }

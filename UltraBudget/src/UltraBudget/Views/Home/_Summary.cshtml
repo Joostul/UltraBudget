@@ -1,11 +1,18 @@
-﻿@model Transaction
+﻿@model Wallet
 
 <tr>
-    <td>@Model.Amount</td>
-    <td>@Model.Date.Day/@Model.Date.Month/@Model.Date.Year</td>
-    <td>@Model.Type</td>
-    <td>@Model.Wallet.Name</td>
-    <td>@Model.Price</td>
-    <td class=""><a class="btn btn-primary pull-right" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
-    <a class="btn btn-primary pull-right" asp-action="Details" asp-route-id="@Model.Id">Detail</a></td>
+    <td>@Model.Name</td>
+    @if (Model.Currency != null)
+    {
+        <td>@Model.Currency.Name</td>
+    }
+    else
+    {
+        <td>Please enter this wallet's Currency correctly.</td>
+    }
+    <td>To be made total of transactions</td>
+    <td class="">
+        <a class="btn btn-primary pull-right" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+        <a class="btn btn-primary pull-right" asp-action="Details" asp-route-id="@Model.Id">Detail</a>
+    </td>
 </tr>

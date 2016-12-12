@@ -27,18 +27,20 @@ namespace UltraBudget.Controllers
             _userManager = userManager;
         }
 
-        // GET: /<controller>/
-        public IActionResult Index()
+        public IActionResult Index(int id)
         {
-            _currentUserId = _userManager.GetUserId(HttpContext.User);
             var model = new HomePageViewModel();
-            model.Transactions = _transactionData.GetTransactionsForCurrentUser(_currentUserId);
+            _currentUserId = _userManager.GetUserId(HttpContext.User);
+            
+            model.Transactions = id == 0 ? 
+                _transactionData.GetTransactionsForCurrentUser(_currentUserId) :
+                model.Transactions = _transactionData.GetTransactionsForCurrentUser(_currentUserId, id);
+            
             model.Greeting = _greeter.GetGreeting();
             model.Wallets = _transactionData.GetWalletsForCurrentUser(_currentUserId);
 
             return View(model);
         }
-
 
         public IActionResult Details(int id)
         {
@@ -118,15 +120,13 @@ namespace UltraBudget.Controllers
             return View();
         }
 
-        //TODO Have to move this to the index action and add functionality there to get transaxctions by wallet
-        [ValidateAntiForgeryToken]
-        public IActionResult GetTransactionsForUserAndWallet(string walletName)
-        {
-            var currentWallet = _transactionData.GetWalletBasedOnName(walletName);
-            int walletId = currentWallet.Id;
-            var transactions = _transactionData.GetTransactionsForCurrentUser(_currentUserId, walletId);
+        ////TODO Have to move this to the index action and add functionality there to get transaxctions by wallet
+        //[ValidateAntiForgeryToken]
+        //public IActionResult GetTransactionsForUserAndWallet(string walletName)
+        //{
+        //    var transactions = _transactionData.GetTransactionsForCurrentUser(_currentUserId, walletId);
 
-            return View(transactions);
-        }
+        //    return View(transactions);
+        //}
     }
 }
