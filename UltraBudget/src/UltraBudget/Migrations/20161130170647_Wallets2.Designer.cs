@@ -8,9 +8,10 @@ using UltraBudget.Entities;
 namespace UltraBudget.Migrations
 {
     [DbContext(typeof(UltraBudgetDbContext))]
-    partial class UltraBudgetDbContextModelSnapshot : ModelSnapshot
+    [Migration("20161130170647_Wallets2")]
+    partial class Wallets2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.0-rtm-21431")
@@ -128,13 +129,18 @@ namespace UltraBudget.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<int?>("ExchangeRateId");
+
                     b.Property<bool>("MainCurrency");
 
                     b.Property<string>("Name");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Currencies");
+                    b.HasIndex("ExchangeRateId")
+                        .IsUnique();
+
+                    b.ToTable("Currency");
                 });
 
             modelBuilder.Entity("UltraBudget.Entities.ExchangeRate", b =>
@@ -144,13 +150,9 @@ namespace UltraBudget.Migrations
 
                     b.Property<double>("BitcoinExchangeRate");
 
-                    b.Property<int?>("CurrencyId");
-
                     b.Property<DateTime>("Date");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CurrencyId");
 
                     b.ToTable("ExchangeRate");
                 });
@@ -249,8 +251,6 @@ namespace UltraBudget.Migrations
 
                     b.Property<string>("Name");
 
-                    b.Property<string>("UserId");
-
                     b.HasKey("Id");
 
                     b.HasIndex("CurrencyId");
@@ -295,17 +295,17 @@ namespace UltraBudget.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("UltraBudget.Entities.ExchangeRate", b =>
+            modelBuilder.Entity("UltraBudget.Entities.Currency", b =>
                 {
-                    b.HasOne("UltraBudget.Entities.Currency", "Currency")
-                        .WithMany("ExchangeRate")
-                        .HasForeignKey("CurrencyId");
+                    b.HasOne("UltraBudget.Entities.ExchangeRate", "ExchangeRate")
+                        .WithOne("Currency")
+                        .HasForeignKey("UltraBudget.Entities.Currency", "ExchangeRateId");
                 });
 
             modelBuilder.Entity("UltraBudget.Entities.Transaction", b =>
                 {
                     b.HasOne("UltraBudget.Entities.Wallet", "Wallet")
-                        .WithMany("Transactions")
+                        .WithMany()
                         .HasForeignKey("WalletId");
                 });
 

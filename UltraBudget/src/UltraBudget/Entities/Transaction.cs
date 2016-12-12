@@ -8,7 +8,9 @@ namespace UltraBudget.Entities
         [Display(Name = "Credit")]
         Credit = 1,
         [Display(Name = "Debit")]
-        Debit = 2
+        Debit = 2,
+        [Display(Name = "Investment")]
+        Invest = 3
     }
 
     public class Transaction
@@ -25,7 +27,16 @@ namespace UltraBudget.Entities
 
         [Display(Name = "Transaction Type")]
         public TransactionType Type { get; set; }
-        
+
+        //public int WalletId { get; set; }
+
+        [Display(Name = "Wallet")]
+        public Wallet Wallet { get; set; }
+
+        [Display(Name = "Price of the transaction")]
+        public double? Price { get; set; }
+
+        [Display(Name = "UserId")]
         public string UserId { get; set; }
     }
 }

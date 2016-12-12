@@ -16,5 +16,10 @@ namespace UltraBudget.ViewModels
 
         [Required]
         public TransactionType Type { get; set; }
+
+        [Required]
+        public string Wallet { get; set; }
+        
+        public double? Price { get; set; }
     }
 }

@@ -2,39 +2,23 @@
 
 @{
     ViewBag.Title = "Home";
-    var totalAmount = 0.0;
 }
 
-<h1>Transactions</h1>
+<h1>Home</h1>
 <table class="table table-responsive">
     <thead>
         <tr>
-            <th>Amount</th>
-            <th>Date</th>
-            <th>Type</th>
-            <th></th>
+            <th>Wallet</th>
+            <th>Currency</th>
+            <th>Total</th>
         </tr>
     </thead>
-    @foreach (var transaction in Model.Transactions)
+    @foreach (var wallet in Model.Wallets)
     {
-        @Html.Partial("_Summary", transaction)
+        @Html.Partial("_Summary", wallet)
     }
 </table>
-<div>
-    <a class="btn btn-primary" asp-action="Create">Create</a>
-</div>
 
-@section total {
-    @foreach (var transaction in Model.Transactions)
-    {
-        if (transaction.Type == TransactionType.Credit)
-        {
-            totalAmount += transaction.Amount;
-        }
-        else if (transaction.Type == TransactionType.Debit)
-        {
-            totalAmount -= transaction.Amount;
-        }
-    }
-    <h2>Total: @totalAmount</h2>
-}
+<div>
+    <a class="btn btn-primary" asp-action="Create">Create new wallet</a>
+</div>
