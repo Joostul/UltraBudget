@@ -10,6 +10,7 @@ namespace UltraBudget.Services
     {
         IEnumerable<Transaction> GetTransactions();
         IEnumerable<Transaction> GetTransactionsForCurrentUser(string userId);
+        IEnumerable<Transaction> GetTransactionsForCurrentUser(string userId, int walletId);
         Transaction Get(int id);
         Transaction Add(Transaction newTransaction);
         Wallet Add(Wallet newWallet);
@@ -58,19 +59,37 @@ namespace UltraBudget.Services
 
         public IEnumerable<Transaction> GetTransactionsForCurrentUser(string userId)
         {
-            return _context.Transactions.Where(u => u.UserId == userId).Include(w => w.Wallet).ToArray();
+            return _context.Transactions
+                .Where(u => u.UserId == userId)
+                .Include(w => w.Wallet)
+                .ToArray();
+        }
+
+        public IEnumerable<Transaction> GetTransactionsForCurrentUser(string userId, int walletId)
+        {
+            return _context.Transactions
+                .Where(u => u.UserId == userId)
+                .Where(w => w.Wallet.Id == walletId)
+                .Include(w => w.Wallet)
+                .ToArray();
         }
 
         public IEnumerable<Wallet> GetWalletsForCurrentUser(string userId)
         {
-            var wallets = _context.Wallets.Where(u => u.UserId == userId).Include(c => c.Currency).ToArray();
+            var wallets = _context.Wallets
+                .Where(u => u.UserId == userId)
+                .Include(c => c.Currency)
+                .ToArray();
 
             return wallets;
         }
 
         public IEnumerable<string> GetWalletNamesForCurrentUser(string userId)
         {
-            var wallets = _context.Wallets.Where(u => u.UserId == userId).Include(c => c.Currency).ToArray();
+            var wallets = _context.Wallets
+                .Where(u => u.UserId == userId)
+                .Include(c => c.Currency)
+                .ToArray();
 
             List<string> walletNames = new List<string>();
 
@@ -84,7 +103,10 @@ namespace UltraBudget.Services
 
         public Wallet GetWalletBasedOnName(string walletName)
         {
-            var wallet = _context.Wallets.Include(c => c.Currency).ToArray().FirstOrDefault(u => u.Name == walletName);
+            var wallet = _context.Wallets
+                .Include(c => c.Currency)
+                .ToArray()
+                .FirstOrDefault(u => u.Name == walletName);
 
             return wallet;
         }

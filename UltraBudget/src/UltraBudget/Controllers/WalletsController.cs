@@ -117,5 +117,16 @@ namespace UltraBudget.Controllers
 
             return View();
         }
+
+        //TODO Have to move this to the index action and add functionality there to get transaxctions by wallet
+        [ValidateAntiForgeryToken]
+        public IActionResult GetTransactionsForUserAndWallet(string walletName)
+        {
+            var currentWallet = _transactionData.GetWalletBasedOnName(walletName);
+            int walletId = currentWallet.Id;
+            var transactions = _transactionData.GetTransactionsForCurrentUser(_currentUserId, walletId);
+
+            return View(transactions);
+        }
     }
 }

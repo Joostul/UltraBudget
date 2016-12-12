@@ -10,7 +10,6 @@ using UltraBudget.ViewModels;
 namespace UltraBudget.Controllers
 {
     [Authorize]
-    //[Route("[controller]/[action]")]
     public class HomeController: Controller
     {
         private IGreeter _greeter;
