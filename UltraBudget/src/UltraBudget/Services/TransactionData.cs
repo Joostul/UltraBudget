@@ -19,6 +19,7 @@ namespace UltraBudget.Services
         IEnumerable<string> GetWalletNamesForCurrentUser(string userId);
         IEnumerable<string> GetCurrencieNamesForCurrentUser(string userId);
         Wallet GetWalletBasedOnName(string WalletName);
+        Currency GetCurrencyBasedOnName(string CurrencyName);
         Wallet GetWallet(int id);
     }
 
@@ -127,6 +128,14 @@ namespace UltraBudget.Services
                    .Include(c => c.Currency)
                    .ToArray()
                    .FirstOrDefault(u => u.Id == id);
+        }
+
+        public Currency GetCurrencyBasedOnName(string CurrencyName)
+        {
+            return _context.Currencies
+                .Include(e => e.ExchangeRate)
+                .ToArray()
+                .FirstOrDefault(u => u.Name == CurrencyName);
         }
     }
 }

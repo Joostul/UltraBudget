@@ -38,7 +38,13 @@ namespace UltraBudget.Controllers
 
         public IActionResult Details(int id)
         {
-            return View();
+            var model = _transactionData.GetWallet(id);
+            if (model == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View(model);
         }
 
         [HttpGet]
@@ -60,7 +66,7 @@ namespace UltraBudget.Controllers
             var wallet = _transactionData.GetWallet(id);
             if (ModelState.IsValid)
             {
-                wallet.Currency = model.Currency;
+                wallet.Currency = _transactionData.GetCurrencyBasedOnName(model.Currency);
                 wallet.Name = model.Name;
                 wallet.UserId = _currentUserId;
                 _transactionData.Commit();
