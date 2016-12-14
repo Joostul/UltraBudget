@@ -19,6 +19,7 @@ namespace UltraBudget.Services
         IEnumerable<string> GetWalletNamesForCurrentUser(string userId);
         IEnumerable<string> GetCurrencieNamesForCurrentUser(string userId);
         Wallet GetWalletBasedOnName(string WalletName);
+        Wallet GetWallet(int id);
     }
 
     public class SqlTransactionData : ITransactionData
@@ -76,12 +77,10 @@ namespace UltraBudget.Services
 
         public List<Wallet> GetWalletsForCurrentUser(string userId)
         {
-            var wallets = _context.Wallets
+            return _context.Wallets
                 .Where(u => u.UserId == userId)
                 .Include(c => c.Currency)
                 .ToList();
-
-            return wallets;
         }
 
         public IEnumerable<string> GetWalletNamesForCurrentUser(string userId)
@@ -103,12 +102,10 @@ namespace UltraBudget.Services
 
         public Wallet GetWalletBasedOnName(string walletName)
         {
-            var wallet = _context.Wallets
+            return _context.Wallets
                 .Include(c => c.Currency)
                 .ToArray()
                 .FirstOrDefault(u => u.Name == walletName);
-
-            return wallet;
         }
 
         public IEnumerable<string> GetCurrencieNamesForCurrentUser(string userId)
@@ -122,6 +119,14 @@ namespace UltraBudget.Services
                 currencyNames.Add(currency.Name);
             }
             return currencyNames;
+        }
+
+        public Wallet GetWallet(int id)
+        {
+            return _context.Wallets
+                   .Include(c => c.Currency)
+                   .ToArray()
+                   .FirstOrDefault(u => u.Id == id);
         }
     }
 }

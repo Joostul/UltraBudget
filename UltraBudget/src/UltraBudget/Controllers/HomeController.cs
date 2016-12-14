@@ -44,14 +44,29 @@ namespace UltraBudget.Controllers
         [HttpGet]
         public IActionResult Edit(int id)
         {
-            return View();
+            ViewBag.Currencies = new SelectList(_transactionData.GetCurrencieNamesForCurrentUser(_currentUserId));
+            var model = _transactionData.GetWallet(id);
+            if (model == null)
+            {
+                return RedirectToAction("Index");
+            }
+            return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, TransactionEditViewModel model)
+        public IActionResult Edit(int id, WalletEditViewModel model)
         {
-            return View();
+            var wallet = _transactionData.GetWallet(id);
+            if (ModelState.IsValid)
+            {
+                wallet.Currency = model.Currency;
+                wallet.Name = model.Name;
+                wallet.UserId = _currentUserId;
+                _transactionData.Commit();
+                return RedirectToAction("Details", new { id = wallet.Id });
+            }
+            return View(wallet);
         }
 
         [HttpGet]
