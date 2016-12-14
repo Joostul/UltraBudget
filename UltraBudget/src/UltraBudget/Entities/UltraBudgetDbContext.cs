@@ -18,5 +18,7 @@ namespace UltraBudget.Entities
         public DbSet<Wallet> Wallets { get; set; }
 
         public DbSet<Currency> Currencies { get; set; }
+
+        public DbSet<Category> Categories { get; set; }
     }
 }

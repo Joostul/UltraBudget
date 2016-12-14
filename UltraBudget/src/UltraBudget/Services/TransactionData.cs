@@ -21,6 +21,7 @@ namespace UltraBudget.Services
         Wallet GetWalletBasedOnName(string WalletName);
         Currency GetCurrencyBasedOnName(string CurrencyName);
         Wallet GetWallet(int id);
+        List<Category> GetCategoriesForCurrentUser(string userId);
     }
 
     public class SqlTransactionData : ITransactionData
@@ -136,6 +137,11 @@ namespace UltraBudget.Services
                 .Include(e => e.ExchangeRate)
                 .ToArray()
                 .FirstOrDefault(u => u.Name == CurrencyName);
+        }
+
+        public List<Category> GetCategoriesForCurrentUser(string userId)
+        {
+            return _context.Categories.Where(u => u.UserId == userId).ToList();
         }
     }
 }

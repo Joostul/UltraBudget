@@ -38,6 +38,7 @@ namespace UltraBudget.Controllers
             
             model.Greeting = _greeter.GetGreeting();
             model.Wallets = _transactionData.GetWalletsForCurrentUser(_currentUserId);
+            model.Categories = _transactionData.GetCategoriesForCurrentUser(_currentUserId);
 
             return View(model);
         }
