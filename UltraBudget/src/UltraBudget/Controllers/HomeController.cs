@@ -29,6 +29,7 @@ namespace UltraBudget.Controllers
         {
             _currentUserId = _userManager.GetUserId(HttpContext.User);
             var model = new HomePageViewModel();
+            model.Transactions = _transactionData.GetTransactions();
             model.Greeting = _greeter.GetGreeting();
             model.Wallets = _transactionData.GetWalletsForCurrentUser(_currentUserId);
 

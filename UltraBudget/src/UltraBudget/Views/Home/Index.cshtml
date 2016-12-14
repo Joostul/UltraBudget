@@ -13,10 +13,7 @@
             <th>Total</th>
         </tr>
     </thead>
-    @foreach (var wallet in Model.Wallets)
-    {
-        @Html.Partial("_Summary", wallet)
-    }
+    @Html.Partial("_Summary", Model)
 </table>
 
 <div>

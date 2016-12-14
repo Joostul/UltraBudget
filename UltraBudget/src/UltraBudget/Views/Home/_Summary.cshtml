@@ -1,18 +1,35 @@
-﻿@model Wallet
+﻿@model UltraBudget.ViewModels.HomePageViewModel
 
-<tr>
-    <td>@Model.Name</td>
-    @if (Model.Currency != null)
+@{double totalInWallet = 0;}
+
+@foreach (var wallet in Model.Wallets)
+{
+    <tr>
+        <td>@wallet.Name</td>
+        @if (wallet.Currency != null)
+        {
+            <td>@wallet.Currency.Name</td>
+        }
+        else
+        {
+            <td>Please enter this wallet's Currency correctly.</td>
+        }
+
+        @foreach (var t in Model.Transactions.Where(w => w.Wallet.Id == wallet.Id))
+        {
+            totalInWallet += t.Amount;
+        }
+        <td>@totalInWallet</td>
+        <td class="">
+            <a class="btn btn-primary pull-right" asp-action="Edit" asp-route-id="@wallet.Id">Edit</a>
+            <a class="btn btn-primary pull-right" asp-action="Details" asp-route-id="@wallet.Id">Detail</a>
+        </td>
+    </tr>
+
+
+    @if(totalInWallet != 0)
     {
-        <td>@Model.Currency.Name</td>
+        totalInWallet = 0;
     }
-    else
-    {
-        <td>Please enter this wallet's Currency correctly.</td>
-    }
-    <td>To be made total of transactions</td>
-    <td class="">
-        <a class="btn btn-primary pull-right" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
-        <a class="btn btn-primary pull-right" asp-action="Details" asp-route-id="@Model.Id">Detail</a>
-    </td>
-</tr>
+
+}
