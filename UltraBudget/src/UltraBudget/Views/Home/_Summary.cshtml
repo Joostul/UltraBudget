@@ -8,7 +8,7 @@
         <td>@wallet.Name</td>
         @if (wallet.Currency != null)
         {
-            <td>@wallet.Currency.Name</td>
+            <td><a asp-controller="Wallets" asp-action="Index" asp-route-id="@wallet.Id"></a>@wallet.Currency.Name</td>
         }
         else
         {

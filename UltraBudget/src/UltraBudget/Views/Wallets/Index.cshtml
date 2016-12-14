@@ -2,7 +2,9 @@
 
 @{
     ViewBag.Title = "Wallets";
-    var totalAmount = 0.0;
+    var totalAmountEuro = 0.0;
+    var totalAmountDollar = 0.0;
+    var totalAmountBitcoin = 0.0;
 }
 
 <h1>All Transactions</h1>
@@ -27,17 +29,61 @@
 </div>
 
 @section total {
-    @*TODO: filter each currency here and give totals in all currencies*@
     @foreach (var transaction in Model.Transactions)
     {
-        if (transaction.Type == TransactionType.Credit || transaction.Type == TransactionType.Invest)
+        if (transaction.Wallet.Currency.Name == "Euro")
         {
-            totalAmount += transaction.Amount;
+            switch (transaction.Type)
+            {
+                case TransactionType.Credit:
+                case TransactionType.Invest:
+                    totalAmountEuro += transaction.Amount;
+                    break;
+                case TransactionType.Debit:
+                    totalAmountEuro -= transaction.Amount;
+                    break;
+            }
         }
-        else if (transaction.Type == TransactionType.Debit)
+        else if (transaction.Wallet.Currency.Name == "Dollar")
         {
-            totalAmount -= transaction.Amount;
+            switch (transaction.Type)
+            {
+                case TransactionType.Credit:
+                case TransactionType.Invest:
+                    totalAmountDollar += transaction.Amount;
+                    break;
+                case TransactionType.Debit:
+                    totalAmountDollar -= transaction.Amount;
+                    break;
+            }
+        }
+        else if (transaction.Wallet.Currency.Name == "Bitcoin")
+        {
+            switch (transaction.Type)
+            {
+                case TransactionType.Credit:
+                case TransactionType.Invest:
+                    totalAmountBitcoin += transaction.Amount;
+                    break;
+                case TransactionType.Debit:
+                    totalAmountBitcoin -= transaction.Amount;
+                    break;
+            }
         }
     }
-    <h2>Total: @totalAmount</h2>
+
+    @if (totalAmountEuro != 0.0)
+    {
+        <h2>Total Euro: @totalAmountEuro</h2>
+    }
+
+    @if (totalAmountDollar != 0.0)
+    {
+        <h2>Total Dollar: @totalAmountDollar</h2>
+    }
+
+    @if (totalAmountBitcoin != 0.0)
+    {
+        <h2>Total Bitcoin: @totalAmountBitcoin</h2>
+    }
 }
