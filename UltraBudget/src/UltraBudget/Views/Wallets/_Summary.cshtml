@@ -16,8 +16,10 @@
     }
     <td>@Model.Wallet.Name</td>
     <td>@Model.Price</td>
-    <td class="">
-        <a class="btn btn-primary pull-right" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
-        <a class="btn btn-primary pull-right" asp-action="Details" asp-route-id="@Model.Id">Detail</a>
+    <td>
+        <div class="btn-group" role="group">
+            <a class="btn btn-default" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+            <a class="btn btn-default" asp-action="Details" asp-route-id="@Model.Id">Detail</a>
+        </div>
     </td>
 </tr>

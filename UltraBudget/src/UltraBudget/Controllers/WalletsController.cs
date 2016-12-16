@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using UltraBudget.Entities;
 using UltraBudget.ViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -91,13 +92,15 @@ namespace UltraBudget.Controllers
         }
 
         [HttpGet]
-        public IActionResult Create()
+        public IActionResult Create(Transaction model)
         {
             ViewBag.Currencies = new SelectList(_transactionData.GetCurrencieNamesForUser(_currentUserId));
             ViewBag.Wallets = new SelectList(_transactionData.GetWalletNamesForUser(_currentUserId));
             ViewBag.Categories = new SelectList(_transactionData.GetCategoryNamesForUser(_currentUserId));
 
-            return View();
+            model.Date = DateTime.Now;
+
+            return View(model);
         }
 
         [HttpPost]
