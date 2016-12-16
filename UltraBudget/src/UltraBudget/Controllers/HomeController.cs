@@ -31,7 +31,7 @@ namespace UltraBudget.Controllers
             var model = new HomePageViewModel();
             model.Transactions = _transactionData.GetTransactions();
             model.Greeting = _greeter.GetGreeting();
-            model.Wallets = _transactionData.GetWalletsForCurrentUser(_currentUserId);
+            model.Wallets = _transactionData.GetWalletsForUser(_currentUserId);
 
             return View(model);
         }
@@ -50,7 +50,7 @@ namespace UltraBudget.Controllers
         [HttpGet]
         public IActionResult Edit(int id)
         {
-            ViewBag.Currencies = new SelectList(_transactionData.GetCurrencieNamesForCurrentUser(_currentUserId));
+            ViewBag.Currencies = new SelectList(_transactionData.GetCurrencieNamesForUser(_currentUserId));
             var model = _transactionData.GetWallet(id);
             if (model == null)
             {
@@ -78,7 +78,7 @@ namespace UltraBudget.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            ViewBag.Currencies = new SelectList(_transactionData.GetCurrencieNamesForCurrentUser(_currentUserId));
+            ViewBag.Currencies = new SelectList(_transactionData.GetCurrencieNamesForUser(_currentUserId));
 
             return View();
         }

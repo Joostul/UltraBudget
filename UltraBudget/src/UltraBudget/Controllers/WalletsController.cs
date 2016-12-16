@@ -29,12 +29,12 @@ namespace UltraBudget.Controllers
             _currentUserId = _userManager.GetUserId(HttpContext.User);
             
             model.Transactions = id == 0 ? 
-                _transactionData.GetTransactionsForCurrentUser(_currentUserId) :
-                model.Transactions = _transactionData.GetTransactionsForCurrentUser(_currentUserId, id);
+                _transactionData.GetTransactionsForUser(_currentUserId) :
+                model.Transactions = _transactionData.GetTransactionsForUser(_currentUserId, id);
             
             model.Greeting = _greeter.GetGreeting();
-            model.Wallets = _transactionData.GetWalletsForCurrentUser(_currentUserId);
-            model.Categories = _transactionData.GetCategoriesForCurrentUser(_currentUserId);
+            model.Wallets = _transactionData.GetWalletsForUser(_currentUserId);
+            model.Categories = _transactionData.GetCategoriesForUser(_currentUserId);
 
             return View(model);
         }
@@ -53,7 +53,8 @@ namespace UltraBudget.Controllers
         [HttpGet]
         public IActionResult Edit(int id)
         {
-            ViewBag.Wallets = new SelectList(_transactionData.GetWalletNamesForCurrentUser(_currentUserId));
+            ViewBag.Wallets = new SelectList(_transactionData.GetWalletNamesForUser(_currentUserId));
+            ViewBag.Categories = new SelectList(_transactionData.GetCategoryNamesForUser(_currentUserId));
             var model = _transactionData.Get(id);
             if (model == null)
             {
@@ -72,6 +73,7 @@ namespace UltraBudget.Controllers
                 transaction.Amount = model.Amount;
                 transaction.Date = model.Date;
                 transaction.Type = model.Type;
+                transaction.Category = _transactionData.GetCategoryBasedOnName(model.Category);
                 transaction.Wallet = _transactionData.GetWalletBasedOnName(model.Wallet);
                 if (transaction.Type == TransactionType.Invest)
                 {
@@ -91,8 +93,9 @@ namespace UltraBudget.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            ViewBag.Currencies = new SelectList(_transactionData.GetCurrencieNamesForCurrentUser(_currentUserId));
-            ViewBag.Wallets = new SelectList(_transactionData.GetWalletNamesForCurrentUser(_currentUserId));
+            ViewBag.Currencies = new SelectList(_transactionData.GetCurrencieNamesForUser(_currentUserId));
+            ViewBag.Wallets = new SelectList(_transactionData.GetWalletNamesForUser(_currentUserId));
+            ViewBag.Categories = new SelectList(_transactionData.GetCategoryNamesForUser(_currentUserId));
 
             return View();
         }
@@ -109,6 +112,7 @@ namespace UltraBudget.Controllers
                 newTransaction.Type = model.Type;
                 newTransaction.UserId = _currentUserId;
                 newTransaction.Wallet = _transactionData.GetWalletBasedOnName(model.Wallet);
+                newTransaction.Category = _transactionData.GetCategoryBasedOnName(model.Category);
                 newTransaction = _transactionData.Add(newTransaction);
                 _transactionData.Commit();
                 return RedirectToAction("Details", new { id = newTransaction.Id });
@@ -116,14 +120,5 @@ namespace UltraBudget.Controllers
 
             return View();
         }
-
-        ////TODO Have to move this to the index action and add functionality there to get transaxctions by wallet
-        //[ValidateAntiForgeryToken]
-        //public IActionResult GetTransactionsForUserAndWallet(string walletName)
-        //{
-        //    var transactions = _transactionData.GetTransactionsForCurrentUser(_currentUserId, walletId);
-
-        //    return View(transactions);
-        //}
     }
 }

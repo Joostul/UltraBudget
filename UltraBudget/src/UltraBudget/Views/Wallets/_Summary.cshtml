@@ -4,7 +4,16 @@
     <td>@Model.Amount</td>
     <td>@Model.Date.Day/@Model.Date.Month/@Model.Date.Year</td>
     <td>@Model.Type</td>
-    <td>@Model.Category</td>
+
+    @if (Model.Category != null)
+    {
+        <td>@Model.Category.Name</td>
+    }
+    else
+    {
+        <td>to be cat</td>
+
+    }
     <td>@Model.Wallet.Name</td>
     <td>@Model.Price</td>
     <td class="">

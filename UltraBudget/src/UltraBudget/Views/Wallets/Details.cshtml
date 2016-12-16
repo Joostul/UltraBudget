@@ -20,7 +20,7 @@
         Type: @Model.Type
     </div>
     <div>
-        Category: @Model.Category
+        Category: @Model.Category.Name
     </div>
     <div>
         Wallet: @Model.Wallet.Name
@@ -38,7 +38,7 @@
         UserId: @Model.UserId
     </div>
     <div>
-        <a><a asp-controller="Wallets" asp-action="Index">Home</a></a>
+        <a asp-controller="Wallets" asp-action="Index">Home</a>
     </div>
 </body>
 </html>

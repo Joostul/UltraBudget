@@ -18,7 +18,7 @@ namespace UltraBudget.ViewModels
         public TransactionType Type { get; set; }
 
         [Required]
-        public Category Category { get; set; }
+        public string Category { get; set; }
 
         [Required]
         public string Wallet { get; set; }

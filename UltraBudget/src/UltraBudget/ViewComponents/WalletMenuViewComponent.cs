@@ -21,7 +21,7 @@ namespace UltraBudget.ViewComponents
         public IViewComponentResult Invoke()
         {
             _currentUserId = _userManager.GetUserId(HttpContext.User);
-            var wallets = _transactionData.GetWalletsForCurrentUser(_currentUserId);
+            var wallets = _transactionData.GetWalletsForUser(_currentUserId);
 
             return View(wallets);
         }
