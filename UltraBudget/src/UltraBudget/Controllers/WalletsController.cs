@@ -51,6 +51,17 @@ namespace UltraBudget.Controllers
             return View(model);
         }
 
+        public IActionResult CategoryDetails(int id)
+        {
+            var model = _transactionData.GetCategory(id);
+            if (model == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View(model);
+        }
+
         [HttpGet]
         public IActionResult Edit(int id)
         {
@@ -116,9 +127,34 @@ namespace UltraBudget.Controllers
                 newTransaction.UserId = _currentUserId;
                 newTransaction.Wallet = _transactionData.GetWalletBasedOnName(model.Wallet);
                 newTransaction.Category = _transactionData.GetCategoryBasedOnName(model.Category);
+
                 newTransaction = _transactionData.Add(newTransaction);
                 _transactionData.Commit();
                 return RedirectToAction("Details", new { id = newTransaction.Id });
+            }
+
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult CreateCategory(Category model)
+        {
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult CreateCategory(CategoryEditViewModel model)
+        {
+            if(ModelState.IsValid)
+            {
+                var newCategory = new Category();
+                newCategory.Name = model.Name;
+                newCategory.UserId = _currentUserId;
+
+                newCategory = _transactionData.Add(newCategory);
+                _transactionData.Commit();
+                return RedirectToAction("CategoryDetails", new { id = newCategory.Id });
             }
 
             return View();

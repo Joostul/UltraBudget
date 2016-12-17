@@ -1,0 +1,22 @@
+﻿@model Category
+
+@{
+    ViewBag.Title = "Create Category";
+}
+
+<div>
+    <h1>Create new Category</h1>
+
+    <form method="post" asp-antiforgery="true">
+        <div class="form-group row">
+            <label asp-for="Name" class="col-md-2 col-form-label"></label>
+            <div class="col-md-2">
+                <input asp-for="Name" class="form-control" placeholder="Name" />
+            </div>
+            <span asp-validation-for="Name"></span>
+        </div>
+        <div>
+            <input type="submit" value="Save" class="btn btn-primary" />
+        </div>
+    </form>
+</div>

@@ -13,6 +13,7 @@ namespace UltraBudget.Services
         IEnumerable<Transaction> GetTransactionsForUser(string userId, int walletId);
         Transaction Get(int id);
         Wallet GetWallet(int id);
+        Category GetCategory(int id);
         Transaction Add(Transaction newTransaction);
         Wallet Add(Wallet newWallet);
         Category Add(Category newCategory);
@@ -179,6 +180,13 @@ namespace UltraBudget.Services
                 categoryNames.Add(category.Name);
             }
             return categoryNames;
+        }
+
+        public Category GetCategory(int id)
+        {
+            return _context.Categories
+                .ToArray()
+                .FirstOrDefault(t => t.Id == id);
         }
     }
 }
