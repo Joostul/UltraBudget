@@ -1,11 +1,11 @@
 ﻿@model List<Wallet>
 
 <li role="presentation">
-    <a class="btn btn-primary" asp-controller="Wallets" asp-action="Index" asp-route-id="0">All wallets</a>
+    <a class="btn btn-outline-primary" asp-controller="Wallets" asp-action="Index" asp-route-id="0">All wallets</a>
 </li>
 @foreach (var wallet in Model)
 {
     <li role="presentation">
-        <a class="btn btn-primary" asp-controller="Wallets" asp-action="Index" asp-route-id="@wallet.Id">@wallet.Name</a>
+        <a class="btn btn-outline-primary" asp-controller="Wallets" asp-action="Index" asp-route-id="@wallet.Id">@wallet.Name</a>
     </li>
 }

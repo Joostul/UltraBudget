@@ -4,18 +4,19 @@
     ViewBag.Title = "Home";
 }
 
-<h1>Home</h1>
+<h1>Wallets</h1>
+
+<div>
+    <a class="btn btn-primary" asp-action="Create">Create new wallet</a>
+</div>
 <table class="table table-responsive">
     <thead>
         <tr>
             <th>Wallet</th>
             <th>Currency</th>
             <th>Total</th>
+            <th></th>
         </tr>
     </thead>
     @Html.Partial("_Summary", Model)
 </table>
-
-<div>
-    <a class="btn btn-primary" asp-action="Create">Create new wallet</a>
-</div>

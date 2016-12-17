@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
 
 namespace UltraBudget.Entities
 {
@@ -18,5 +17,7 @@ namespace UltraBudget.Entities
         public DbSet<Wallet> Wallets { get; set; }
 
         public DbSet<Currency> Currencies { get; set; }
+
+        public DbSet<Category> Categories { get; set; }
     }
 }

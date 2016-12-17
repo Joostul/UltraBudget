@@ -9,18 +9,23 @@ namespace UltraBudget.Services
     public interface ITransactionData
     {
         IEnumerable<Transaction> GetTransactions();
-        IEnumerable<Transaction> GetTransactionsForCurrentUser(string userId);
-        IEnumerable<Transaction> GetTransactionsForCurrentUser(string userId, int walletId);
+        IEnumerable<Transaction> GetTransactionsForUser(string userId);
+        IEnumerable<Transaction> GetTransactionsForUser(string userId, int walletId);
         Transaction Get(int id);
+        Wallet GetWallet(int id);
+        Category GetCategory(int id);
         Transaction Add(Transaction newTransaction);
         Wallet Add(Wallet newWallet);
-        void Commit();
-        List<Wallet> GetWalletsForCurrentUser(string userId);
-        IEnumerable<string> GetWalletNamesForCurrentUser(string userId);
-        IEnumerable<string> GetCurrencieNamesForCurrentUser(string userId);
+        Category Add(Category newCategory);
+        List<Wallet> GetWalletsForUser(string userId);
+        List<Category> GetCategoriesForUser(string userId);
+        IEnumerable<string> GetWalletNamesForUser(string userId);
+        IEnumerable<string> GetCurrencieNamesForUser(string userId);
+        IEnumerable<string> GetCategoryNamesForUser(string userId);
         Wallet GetWalletBasedOnName(string WalletName);
         Currency GetCurrencyBasedOnName(string CurrencyName);
-        Wallet GetWallet(int id);
+        Category GetCategoryBasedOnName(string CategoryName);
+        void Commit();
     }
 
     public class SqlTransactionData : ITransactionData
@@ -44,6 +49,12 @@ namespace UltraBudget.Services
             return newWallet;
         }
 
+        public Category Add(Category newCategory)
+        {
+            _context.Add(newCategory);
+            return newCategory;
+        }
+
         public void Commit()
         {
             _context.SaveChanges();
@@ -51,32 +62,40 @@ namespace UltraBudget.Services
 
         public Transaction Get(int id)
         {
-            return _context.Transactions.Include(w => w.Wallet).ToArray().FirstOrDefault(t => t.Id == id);
+            return _context.Transactions
+                .Include(w => w.Wallet)
+                .Include(c => c.Category)
+                .ToArray()
+                .FirstOrDefault(t => t.Id == id);
         }
 
         public IEnumerable<Transaction> GetTransactions()
         {
-            return _context.Transactions.Include(w => w.Wallet).ToArray();
-        }
-
-        public IEnumerable<Transaction> GetTransactionsForCurrentUser(string userId)
-        {
             return _context.Transactions
-                .Where(u => u.UserId == userId)
                 .Include(w => w.Wallet)
                 .ToArray();
         }
 
-        public IEnumerable<Transaction> GetTransactionsForCurrentUser(string userId, int walletId)
+        public IEnumerable<Transaction> GetTransactionsForUser(string userId)
+        {
+            return _context.Transactions
+                .Where(u => u.UserId == userId)
+                .Include(w => w.Wallet)
+                .Include(c => c.Category)
+                .ToArray();
+        }
+
+        public IEnumerable<Transaction> GetTransactionsForUser(string userId, int walletId)
         {
             return _context.Transactions
                 .Where(u => u.UserId == userId)
                 .Where(w => w.Wallet.Id == walletId)
                 .Include(w => w.Wallet)
+                .Include(c => c.Category)
                 .ToArray();
         }
 
-        public List<Wallet> GetWalletsForCurrentUser(string userId)
+        public List<Wallet> GetWalletsForUser(string userId)
         {
             return _context.Wallets
                 .Where(u => u.UserId == userId)
@@ -84,7 +103,7 @@ namespace UltraBudget.Services
                 .ToList();
         }
 
-        public IEnumerable<string> GetWalletNamesForCurrentUser(string userId)
+        public IEnumerable<string> GetWalletNamesForUser(string userId)
         {
             var wallets = _context.Wallets
                 .Where(u => u.UserId == userId)
@@ -109,7 +128,7 @@ namespace UltraBudget.Services
                 .FirstOrDefault(u => u.Name == walletName);
         }
 
-        public IEnumerable<string> GetCurrencieNamesForCurrentUser(string userId)
+        public IEnumerable<string> GetCurrencieNamesForUser(string userId)
         {
             var currencies = _context.Currencies.ToArray();
 
@@ -136,6 +155,38 @@ namespace UltraBudget.Services
                 .Include(e => e.ExchangeRate)
                 .ToArray()
                 .FirstOrDefault(u => u.Name == CurrencyName);
+        }
+
+        public List<Category> GetCategoriesForUser(string userId)
+        {
+            return _context.Categories.Where(u => u.UserId == userId).ToList();
+        }
+
+        public Category GetCategoryBasedOnName(string CategoryName)
+        {
+            return _context.Categories
+                .ToArray()
+                .FirstOrDefault(c => c.Name == CategoryName);
+        }
+
+        public IEnumerable<string> GetCategoryNamesForUser(string userId)
+        {
+            var categories = _context.Categories.ToArray();
+
+            List<string> categoryNames = new List<string>();
+
+            foreach (var category in categories)
+            {
+                categoryNames.Add(category.Name);
+            }
+            return categoryNames;
+        }
+
+        public Category GetCategory(int id)
+        {
+            return _context.Categories
+                .ToArray()
+                .FirstOrDefault(t => t.Id == id);
         }
     }
 }

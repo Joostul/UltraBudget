@@ -8,12 +8,16 @@
 }
 
 <h1>All Transactions</h1>
+<div>
+    <a class="btn btn-primary" asp-action="Create">Create new transaction</a>
+</div>
 <table class="table table-responsive">
     <thead>
         <tr>
             <th>Amount</th>
             <th>Date</th>
             <th>Type</th>
+            <th>Category</th>
             <th>Wallet</th>
             <th>Price</th>
             <th></th>
@@ -24,9 +28,6 @@
         @Html.Partial("_Summary", transaction)
     }
 </table>
-<div>
-    <a class="btn btn-primary" asp-action="Create">Create</a>
-</div>
 
 @section total {
     @foreach (var transaction in Model.Transactions)

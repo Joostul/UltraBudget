@@ -1,30 +1,30 @@
-﻿@model UltraBudget.Entities.Wallet
+﻿@model Category
 
 @{
-    ViewBag.Title = "Wallet details";
+    ViewBag.Title = "Category details";
 }
 
 <html>
 <body>
-    <h1>@Model.Name</h1>
+    <h1>Category details</h1>
     <div class="form-group row">
         <div class="col-md-1">Id:</div>
         <div class="col-md-4">@Model.Id</div>
     </div>
     <div class="form-group row">
-        <div class="col-md-1">Name:</div>
+        <div class="col-md-1">Amount:</div>
         <div class="col-md-4">@Model.Name</div>
     </div>
     <div class="form-group row">
-        <div class="col-md-1">Currency:</div>
-        <div class="col-md-4">@Model.Currency.Name</div>
+        <div class="col-md-1">Username:</div>
+        <div class="col-md-4">@User.Identity.Name</div>
     </div>
     <div class="form-group row">
         <div class="col-md-1">UserId:</div>
         <div class="col-md-4">@Model.UserId</div>
     </div>
     <div>
-        <a asp-controller="Home" asp-action="Index" class="btn btn-default">Back</a>
+        <a asp-controller="Wallets" asp-action="Index" class="btn btn-default">Back</a>
     </div>
 </body>
 </html>
