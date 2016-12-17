@@ -9,18 +9,22 @@
 
     <div>
         <form method="post" asp-antiforgery="true">
-            <div>
-                <label asp-for="Name"></label>
-                <input asp-for="Name" />
+            <div class="form-group row">
+                <label asp-for="Name" class="col-md-2 col-form-label"></label>
+                <div class="col-md-2">
+                    <input asp-for="Name" class="form-control" />
+                </div>
                 <span asp-validation-for="Name"></span>
             </div>
-            <div>
-                <label asp-for="Currency"></label>
-                <select asp-for="Currency" asp-items="@ViewBag.Currencies" ></select>
+            <div class="form-group row">
+                <label asp-for="Currency" class="col-md-2 col-form-label"></label>
+                <div class="col-md-2">
+                    <select asp-for="Currency" asp-items="@ViewBag.Currencies" class="form-control selectpicker"></select>
+                </div>
                 <span asp-validation-for="Currency"></span>
             </div>
             <div>
-                <input type="submit" value="Save" />
+                <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
     </div>

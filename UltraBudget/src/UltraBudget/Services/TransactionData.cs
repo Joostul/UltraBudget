@@ -12,18 +12,19 @@ namespace UltraBudget.Services
         IEnumerable<Transaction> GetTransactionsForUser(string userId);
         IEnumerable<Transaction> GetTransactionsForUser(string userId, int walletId);
         Transaction Get(int id);
+        Wallet GetWallet(int id);
         Transaction Add(Transaction newTransaction);
         Wallet Add(Wallet newWallet);
-        void Commit();
+        Category Add(Category newCategory);
         List<Wallet> GetWalletsForUser(string userId);
+        List<Category> GetCategoriesForUser(string userId);
         IEnumerable<string> GetWalletNamesForUser(string userId);
         IEnumerable<string> GetCurrencieNamesForUser(string userId);
         IEnumerable<string> GetCategoryNamesForUser(string userId);
         Wallet GetWalletBasedOnName(string WalletName);
         Currency GetCurrencyBasedOnName(string CurrencyName);
-        Wallet GetWallet(int id);
-        List<Category> GetCategoriesForUser(string userId);
         Category GetCategoryBasedOnName(string CategoryName);
+        void Commit();
     }
 
     public class SqlTransactionData : ITransactionData
@@ -45,6 +46,12 @@ namespace UltraBudget.Services
         {
             _context.Add(newWallet);
             return newWallet;
+        }
+
+        public Category Add(Category newCategory)
+        {
+            _context.Add(newCategory);
+            return newCategory;
         }
 
         public void Commit()

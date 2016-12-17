@@ -1,6 +1,6 @@
 ﻿@model Transaction
 
-@{ 
+@{
     ViewBag.Title = $"Edit {Model.Id}";
 }
 
@@ -9,29 +9,39 @@
 
     <div>
         <form method="post" asp-antiforgery="true">
-            <div>
-                <label asp-for="Amount"></label>
-                <input asp-for="Amount" />
+            <div class="form-group row">
+                <label asp-for="Amount" class="col-md-2 col-form-label"></label>
+                <div class="col-md-2">
+                    <input asp-for="Amount" class="form-control" />
+                </div>
                 <span asp-validation-for="Amount"></span>
             </div>
-            <div>
-                <label asp-for="Date"></label>
-                <input asp-for="Date" class="form-control datepicker" />
+            <div class="form-group row">
+                <label asp-for="Date" class="col-md-2 col-form-label"></label>
+                <div class="col-md-2">
+                    <input asp-for="Date" class="form-control datepicker" />
+                </div>
                 <span asp-validation-for="Date"></span>
             </div>
-            <div>
-                <label asp-for="Type"></label>
-                <select asp-for="Type" asp-items="@Html.GetEnumSelectList(typeof(TransactionType))"></select>
+            <div class="form-group row">
+                <label asp-for="Type" class="col-md-2 col-form-label"></label>
+                <div class="col-md-2">
+                    <select asp-for="Type" asp-items="@Html.GetEnumSelectList(typeof(TransactionType))" class="form-control"></select>
+                </div>
                 <span asp-validation-for="Type"></span>
             </div>
-            <div>
-                <label asp-for="Category"></label>
-                <select asp-for="Category" asp-items="@ViewBag.Categories"></select>
+            <div class="form-group row">
+                <label asp-for="Category" class="col-md-2 col-form-label"></label>
+                <div class="col-md-2">
+                    <select asp-for="Category" asp-items="@ViewBag.Categories" class="form-control"></select>
+                </div>
                 <span asp-validation-for="Category"></span>
             </div>
-            <div>
-                <label asp-for="Wallet"></label>
-                <select asp-for="Wallet" asp-items="@ViewBag.Wallets"></select>
+            <div class="form-group row">
+                <label asp-for="Wallet" class="col-md-2 col-form-label"></label>
+                <div class="col-md-2">
+                    <select asp-for="Wallet" asp-items="@ViewBag.Wallets" class="form-control"></select>
+                </div>
                 <span asp-validation-for="Wallet"></span>
             </div>
             <div>
