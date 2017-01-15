@@ -8,9 +8,10 @@ using UltraBudget.Entities;
 namespace UltraBudget.Migrations
 {
     [DbContext(typeof(UltraBudgetDbContext))]
-    partial class UltraBudgetDbContextModelSnapshot : ModelSnapshot
+    [Migration("20161217171247_Payees")]
+    partial class Payees
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.0-rtm-21431")

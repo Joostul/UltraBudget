@@ -34,6 +34,9 @@ namespace UltraBudget.Entities
         [Display(Name = "Wallet")]
         public Wallet Wallet { get; set; }
 
+        [Display(Name = "Payee")]
+        public Payee Payee { get; set; }
+
         [Display(Name = "Price of the transaction")]
         public double? Price { get; set; }
 

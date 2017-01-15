@@ -12,10 +12,18 @@
     else
     {
         <td>to be cat</td>
-
     }
     <td>@Model.Wallet.Name</td>
     <td>@Model.Price</td>
+
+    @if (Model.Payee != null)
+    {
+        <td>@Model.Payee</td>
+    }
+    else
+    {
+        <td>to be pay</td>
+    }
     <td>
         <div class="btn-group" role="group">
             <a class="btn btn-default" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>

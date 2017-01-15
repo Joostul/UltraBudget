@@ -40,6 +40,16 @@
             <span asp-validation-for="Category"></span>
         </div>
         <div class="form-group row">
+            <label asp-for="Payee" class="col-md-2 col-form-label"></label>
+            <div class="col-md-2">
+                <select asp-for="Payee" asp-items="@ViewBag.Payees" class="form-control"></select>
+            </div>
+            <div class="col-md-2">
+                <a class="btn btn-primary" asp-action="CreatePayee">Create new payee (nog te maken)</a>
+            </div>
+            <span asp-validation-for="Category"></span>
+        </div>
+        <div class="form-group row">
             <label asp-for="Wallet" class="col-md-2 col-form-label"></label>
             <div class="col-md-2">
                 <select asp-for="Wallet" asp-items="@ViewBag.Wallets" class="form-control"></select>

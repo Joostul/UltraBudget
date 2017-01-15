@@ -6,8 +6,6 @@ using UltraBudget.ViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 
-// For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace UltraBudget.Controllers
 {
     public class WalletsController : Controller
@@ -108,6 +106,7 @@ namespace UltraBudget.Controllers
             ViewBag.Currencies = new SelectList(_transactionData.GetCurrencieNamesForUser(_currentUserId));
             ViewBag.Wallets = new SelectList(_transactionData.GetWalletNamesForUser(_currentUserId));
             ViewBag.Categories = new SelectList(_transactionData.GetCategoryNamesForUser(_currentUserId));
+            ViewBag.Payees = new SelectList(_transactionData.GetPayeeNamesForUser(_currentUserId));
 
             model.Date = DateTime.Now;
 
@@ -127,6 +126,7 @@ namespace UltraBudget.Controllers
                 newTransaction.UserId = _currentUserId;
                 newTransaction.Wallet = _transactionData.GetWalletBasedOnName(model.Wallet);
                 newTransaction.Category = _transactionData.GetCategoryBasedOnName(model.Category);
+                newTransaction.Payee = _transactionData.GetPayeeBasedOnName(model.Payee);
 
                 newTransaction = _transactionData.Add(newTransaction);
                 _transactionData.Commit();

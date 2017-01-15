@@ -19,12 +19,15 @@ namespace UltraBudget.Services
         Category Add(Category newCategory);
         List<Wallet> GetWalletsForUser(string userId);
         List<Category> GetCategoriesForUser(string userId);
+        List<Payee> GetPayeesForUser(string userId);
         IEnumerable<string> GetWalletNamesForUser(string userId);
         IEnumerable<string> GetCurrencieNamesForUser(string userId);
         IEnumerable<string> GetCategoryNamesForUser(string userId);
+        IEnumerable<string> GetPayeeNamesForUser(string userId);
         Wallet GetWalletBasedOnName(string WalletName);
         Currency GetCurrencyBasedOnName(string CurrencyName);
         Category GetCategoryBasedOnName(string CategoryName);
+        Payee GetPayeeBasedOnName(string PayeeName);
         void Commit();
     }
 
@@ -103,6 +106,29 @@ namespace UltraBudget.Services
                 .ToList();
         }
 
+        public List<Payee> GetPayeesForUser(string userId)
+        {
+            return _context.Payees
+                .Where(u => u.UserId == userId)
+                .ToList();
+        }
+        
+        public IEnumerable<string> GetPayeeNamesForUser(string userId)
+        {
+            var payees = _context.Payees
+                .Where(u => u.UserId == userId)
+                .ToArray();
+
+            List<string> payeeNames = new List<string>();
+
+            foreach (var payee in payees)
+            {
+                payeeNames.Add(payee.Name);
+            }
+
+            return payeeNames;
+        }
+
         public IEnumerable<string> GetWalletNamesForUser(string userId)
         {
             var wallets = _context.Wallets
@@ -155,6 +181,13 @@ namespace UltraBudget.Services
                 .Include(e => e.ExchangeRate)
                 .ToArray()
                 .FirstOrDefault(u => u.Name == CurrencyName);
+        }
+
+        public Payee GetPayeeBasedOnName(string PayeeName)
+        {
+            return _context.Payees
+                .ToArray()
+                .FirstOrDefault(p => p.Name == PayeeName);
         }
 
         public List<Category> GetCategoriesForUser(string userId)

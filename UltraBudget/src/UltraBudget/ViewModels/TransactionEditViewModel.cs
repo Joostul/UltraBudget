@@ -22,6 +22,9 @@ namespace UltraBudget.ViewModels
 
         [Required]
         public string Wallet { get; set; }
+
+        [Required]
+        public string Payee { get; set; }
         
         public double? Price { get; set; }
     }
